@@ -1,7 +1,15 @@
 import React from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { GraduationCap, Clock, DollarSign, ArrowRight, Star, BookOpen, CheckCircle2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import {
+  GraduationCap,
+  Clock,
+  ArrowRight,
+  Star,
+  BookOpen,
+  CheckCircle2,
+} from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../contexts/LanguageContext'
 
@@ -11,71 +19,83 @@ export const CoursesPage: React.FC = () => {
   const content =
     language === 'uz'
       ? {
-          heroTitle: "Kelajagingizni tillar orqali quring",
-          heroDesc: "Xalqaro standartlarga asoslangan IELTS va umumiy ingliz tili kurslarimiz bilan orzuingizdagi natijaga erishing.",
+          heroTitle: 'Kelajagingizni tillar orqali quring',
+          heroDesc:
+            'Xalqaro standartlarga asoslangan IELTS va umumiy ingliz tili kurslarimiz bilan orzuingizdagi natijaga erishing.',
           featuredTitle: 'Bizning Kurslar',
           registerBtn: "Ro'yxatdan o'tish",
-          duration: "Davomiyligi",
+          duration: 'Davomiyligi',
           ctaTitle: 'Qayerdan boshlashni bilmayapsizmi?',
-          ctaDesc: "Darajangizni aniqlash uchun bepul testimizni topshiring va mos kursni tanlang.",
+          ctaDesc:
+            'Darajangizni aniqlash uchun bepul testimizni topshiring va mos kursni tanlang.',
           ctaBtn: 'Testni boshlash',
         }
       : {
           heroTitle: 'Build your future through languages',
-          heroDesc: 'Achieve your dream score with our IELTS and General English courses based on international standards.',
+          heroDesc:
+            'Achieve your dream score with our IELTS and General English courses based on international standards.',
           featuredTitle: 'Our Courses',
           registerBtn: 'Enroll Now',
-          duration: "Duration",
+          duration: 'Duration',
           ctaTitle: 'Not sure where to start?',
-          ctaDesc: 'Take our free placement test to determine your level and choose the right course.',
+          ctaDesc:
+            'Take our free placement test to determine your level and choose the right course.',
           ctaBtn: 'Start Test',
         }
 
   const courses = [
     {
       title: 'IELTS Academic',
-      description: 'Universitetga kirish va akademik faoliyat uchun mo‘ljallangan intensiv tayyorgarlik.',
+      description:
+        'Universitetga kirish va akademik faoliyat uchun mo‘ljallangan intensiv tayyorgarlik.',
       duration: '6 Weeks',
       price: '$299',
       rating: 4.9,
-      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
-      badge: 'Popular'
+      image:
+        'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
+      badge: 'Popular',
     },
     {
       title: 'IELTS General',
-      description: 'Immigratsiya va xalqaro ish tajribasi uchun zarur bo‘lgan barcha ko‘nikmalar.',
+      description:
+        'Immigratsiya va xalqaro ish tajribasi uchun zarur bo‘lgan barcha ko‘nikmalar.',
       duration: '8 Weeks',
       price: '$349',
       rating: 4.8,
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
-      badge: 'Recommended'
+      image:
+        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
+      badge: 'Recommended',
     },
     {
       title: 'Speaking Crash',
-      description: 'Gapirish ko‘nikmasini qisqa vaqt ichida ravonlashtirish va qo‘rquvni yengish.',
+      description:
+        'Gapirish ko‘nikmasini qisqa vaqt ichida ravonlashtirish va qo‘rquvni yengish.',
       duration: '4 Weeks',
       price: '$199',
       rating: 5.0,
-      image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&q=80',
-      badge: 'Intensive'
+      image:
+        'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&q=80',
+      badge: 'Intensive',
     },
     {
       title: 'Writing Workshop',
-      description: 'Essay va tasklarni master darajasida yozish texnikalari va tahlili.',
+      description:
+        'Essay va tasklarni master darajasida yozish texnikalari va tahlili.',
       duration: '2 Weeks',
       price: '$199',
       rating: 4.7,
-      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80',
-      badge: 'Workshop'
+      image:
+        'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80',
+      badge: 'Workshop',
     },
   ]
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
+      <section className="relative pt-32 pb-20 px-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -89,15 +109,17 @@ export const CoursesPage: React.FC = () => {
             <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6">
               {content.heroTitle}
             </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-xl">
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl">
               {content.heroDesc}
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2 text-sm font-bold opacity-70">
-                <CheckCircle2 className="w-5 h-5 text-green-500" /> Sertifikat beriladi
+                <CheckCircle2 className="w-5 h-5 text-green-500" /> Sertifikat
+                beriladi
               </div>
               <div className="flex items-center gap-2 text-sm font-bold opacity-70">
-                <CheckCircle2 className="w-5 h-5 text-green-500" /> Professional ustozlar
+                <CheckCircle2 className="w-5 h-5 text-green-500" /> Professional
+                ustozlar
               </div>
             </div>
           </motion.div>
@@ -108,7 +130,7 @@ export const CoursesPage: React.FC = () => {
             className="relative hidden lg:block"
           >
             <div className="aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl relative">
-               <img
+              <img
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
                 alt="Education"
                 className="w-full h-full object-cover"
@@ -120,7 +142,9 @@ export const CoursesPage: React.FC = () => {
                 </div>
                 <div className="text-white">
                   <p className="text-2xl font-bold">10,000+</p>
-                  <p className="text-sm opacity-80">Muvaffaqiyatli o'quvchilar</p>
+                  <p className="text-sm opacity-80">
+                    Muvaffaqiyatli o'quvchilar
+                  </p>
                 </div>
               </div>
             </div>
@@ -133,7 +157,9 @@ export const CoursesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <h2 className="text-3xl md:text-4xl font-black mb-4">{content.featuredTitle}</h2>
+              <h2 className="text-3xl md:text-4xl font-black mb-4">
+                {content.featuredTitle}
+              </h2>
               <div className="h-1.5 w-20 bg-red-600 rounded-full" />
             </div>
           </div>
@@ -146,7 +172,7 @@ export const CoursesPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
+                className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
               >
                 {/* Image Area */}
                 <div className="relative h-64 overflow-hidden">
@@ -156,7 +182,7 @@ export const CoursesPage: React.FC = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute top-6 left-6">
-                    <span className="px-4 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-wider shadow-lg">
+                    <span className="px-4 py-1.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-wider shadow-lg">
                       {course.badge}
                     </span>
                   </div>
@@ -170,23 +196,30 @@ export const CoursesPage: React.FC = () => {
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-4 h-4 ${i < Math.floor(course.rating) ? 'fill-current' : ''}`} />
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${i < Math.floor(course.rating) ? 'fill-current' : ''}`}
+                        />
                       ))}
                     </div>
-                    <span className="text-sm font-bold opacity-60">({course.rating})</span>
+                    <span className="text-sm font-bold opacity-60">
+                      ({course.rating})
+                    </span>
                   </div>
 
                   <h3 className="text-2xl font-black mb-3 group-hover:text-red-600 transition-colors">
                     {course.title}
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">
                     {course.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                       <Clock className="w-4 h-4" />
-                      <span className="text-xs font-bold uppercase">{course.duration}</span>
+                      <span className="text-xs font-bold uppercase">
+                        {course.duration}
+                      </span>
                     </div>
                     <button className="flex items-center gap-2 text-red-600 font-black text-sm uppercase tracking-wider group/btn">
                       {content.registerBtn}
@@ -203,7 +236,7 @@ export const CoursesPage: React.FC = () => {
       {/* Modern CTA */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="relative bg-slate-900 dark:bg-red-600 rounded-[3rem] p-10 md:p-20 overflow-hidden">
+          <div className="relative bg-gray-900 dark:bg-red-600 rounded-[3rem] p-10 md:p-20 overflow-hidden">
             {/* Background elements */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-20" />
 
@@ -212,17 +245,20 @@ export const CoursesPage: React.FC = () => {
                 <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
                   {content.ctaTitle}
                 </h2>
-                <p className="text-slate-300 dark:text-red-100 text-lg mb-10">
+                <p className="text-gray-300 dark:text-red-100 text-lg mb-10">
                   {content.ctaDesc}
                 </p>
-                <button className="bg-white text-slate-900 hover:bg-slate-100 px-10 py-4 rounded-2xl font-black transition-all flex items-center gap-3">
+                <Link
+                  to="/sign-in"
+                  className="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all flex items-center gap-3"
+                >
                   <BookOpen className="w-5 h-5" />
                   {content.ctaBtn}
-                </button>
+                </Link>
               </div>
               <div className="hidden md:flex justify-end">
                 <div className="w-64 h-64 border-8 border-white/10 rounded-full flex items-center justify-center animate-pulse">
-                   <GraduationCap className="w-32 h-32 text-white/20" />
+                  <GraduationCap className="w-32 h-32 text-white/20" />
                 </div>
               </div>
             </div>

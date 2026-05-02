@@ -7,6 +7,7 @@ import { AboutPage } from './pages/AboutPage'
 import { ContactPage } from './pages/ContactPage'
 import { SignInPage } from './pages/SignInPage'
 import { SignUpPage } from './pages/SignUpPage'
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
 
@@ -25,6 +26,7 @@ export const App = () => {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/pricing" element={<CoursesPage />} />
             <Route path="/search" element={<CoursesPage />} />
             <Route path="/practice" element={<CoursesPage />} />

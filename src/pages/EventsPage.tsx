@@ -90,7 +90,7 @@ export const EventsPage: React.FC = () => {
                     <span>📅 {event.date}</span>
                     <span>⏰ {event.time}</span>
                   </div>
-                  <button className="w-full bg-red-700 text-white py-2 sm:py-3 rounded-lg hover:bg-red-800 transition-colors font-semibold text-sm sm:text-base">
+                  <button className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all">
                     Hozir Ro'yxatdan O'ting
                   </button>
                 </div>

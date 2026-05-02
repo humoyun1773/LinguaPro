@@ -141,7 +141,7 @@ export const AboutPage: React.FC = () => {
         }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 selection:bg-red-500 selection:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 selection:bg-red-500 selection:text-white">
       <Header />
 
       {/* Hero Section */}
@@ -165,7 +165,7 @@ export const AboutPage: React.FC = () => {
               <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-8">
                 {content.heroTitle}
               </h1>
-              <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+              <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">
                 {content.heroDesc}
               </p>
             </motion.div>
@@ -174,7 +174,7 @@ export const AboutPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1 }}
-              className="relative aspect-square md:aspect-video lg:aspect-square bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-2xl flex items-center justify-center overflow-hidden group"
+              className="relative aspect-square md:aspect-video lg:aspect-square bg-white dark:bg-gray-900 rounded-[3rem] border border-gray-200 dark:border-gray-800 shadow-2xl flex items-center justify-center overflow-hidden group"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent group-hover:scale-110 transition-transform duration-700" />
               <Globe className="w-32 h-32 md:w-48 md:h-48 text-red-600 animate-pulse" />
@@ -192,7 +192,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* Mission & Vision - Bento Style */}
-      <section className="py-24 px-6 bg-white dark:bg-slate-950">
+      <section className="py-24 px-6 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
           {[
             {
@@ -204,7 +204,7 @@ export const AboutPage: React.FC = () => {
               title: content.visionTitle,
               desc: content.visionDesc,
               color:
-                'from-slate-800 to-slate-900 dark:from-slate-800 dark:to-black',
+                'from-gray-800 to-gray-900 dark:from-gray-800 dark:to-black',
             },
           ].map((item, i) => (
             <motion.div
@@ -236,8 +236,8 @@ export const AboutPage: React.FC = () => {
               viewport={{ once: true }}
               className="relative order-2 lg:order-1"
             >
-              <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
-                <PenTool className="w-32 h-32 text-slate-300 dark:text-slate-800" />
+              <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+                <PenTool className="w-32 h-32 text-gray-300 dark:text-gray-800" />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-red-600 text-white p-10 rounded-[2.5rem] shadow-2xl">
                 <Calendar className="w-10 h-10 mb-4" />
@@ -254,7 +254,7 @@ export const AboutPage: React.FC = () => {
               <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-8">
                 {content.storyTitle}
               </h2>
-              <p className="text-xl text-slate-500 dark:text-slate-400 mb-10 leading-relaxed">
+              <p className="text-xl text-gray-500 dark:text-gray-400 mb-10 leading-relaxed">
                 {content.storyDesc}
               </p>
               <div className="flex gap-4">
@@ -271,7 +271,7 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* Principles Section */}
-      <section className="py-24 px-6 bg-slate-900 dark:bg-black rounded-[4rem] mx-4 my-10 overflow-hidden relative">
+      <section className="py-24 px-6 bg-gray-900 dark:bg-black rounded-[4rem] mx-4 my-10 overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-600/10 via-transparent to-transparent opacity-50" />
         <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-4xl md:text-6xl font-black text-white text-center mb-20 tracking-tighter">
@@ -292,7 +292,7 @@ export const AboutPage: React.FC = () => {
                 <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
                   {p.title}
                 </h3>
-                <p className="text-slate-400 leading-relaxed font-medium">
+                <p className="text-gray-400 leading-relaxed font-medium">
                   {p.desc}
                 </p>
               </motion.div>
@@ -315,7 +315,7 @@ export const AboutPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className="relative p-10 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none"
+                className="relative p-10 bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none"
               >
                 <div className="absolute top-[-25px] left-10 text-6xl font-black text-red-600/20 dark:text-red-600/10">
                   {milestone.year}
@@ -326,7 +326,7 @@ export const AboutPage: React.FC = () => {
                 <h3 className="text-2xl font-bold mb-4 tracking-tight">
                   {milestone.title}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
                   {milestone.desc}
                 </p>
               </motion.div>

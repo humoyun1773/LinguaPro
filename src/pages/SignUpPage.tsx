@@ -254,7 +254,7 @@ export const SignUpPage: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-red-700 to-red-800 text-white py-2 sm:py-3 rounded-xl hover:from-red-800 hover:to-red-900 transition-all font-semibold shadow-lg text-sm sm:text-base"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all"
                 >
                   {content.submitBtn}
                 </button>

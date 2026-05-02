@@ -1,377 +1,459 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import {
-  User,
-  Star,
-  Award,
-  Users,
-  TrendingUp,
-  GraduationCap,
-  Shield,
-  ArrowRight,
-  CheckCircle2,
-} from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../contexts/LanguageContext'
-import { Link } from 'react-router-dom'
+import {
+  ArrowRight,
+  Play,
+  Star,
+  Users,
+  TrendingUp,
+  Award,
+  CheckCircle,
+} from 'lucide-react'
 
 export const HomePage: React.FC = () => {
   const { language } = useLanguage()
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
 
   const content =
     language === 'uz'
       ? {
+          heroTag: '2024-yilning eng yaxshi IELTS platformasi',
           heroTitle: (
             <>
-              IELTSni{' '}
-              <span className="text-red-600 dark:text-red-500">tezroq</span> va
+              IELTSni <span className="text-red-600">tezroq</span> va
               samaraliroq o'rganing.
             </>
           ),
           heroDesc:
             "Bizning isbotlangan metodologiyamiz va tajribali o'qituvchilarimiz bilan IELTS tayyoringizni mukammal o'ting. Maqsadli ballingizga ishonch bilan erishing.",
-          btnStart: 'Boshlash',
-          btnTrial: 'Bepul dars',
-          badgeText: '2024-yilning eng yaxshi IELTS platformasi',
-          statsLabel: [
-            'Talabalar',
-            "O'rtacha ball",
-            'Muvaffaqiyat',
-            "O'qituvchilar",
-          ],
-          educatorsTitle: 'Professional Mentorlar',
-          resultsTitle: "Haqiqiy natijalar, yuqori ko'rsatkichlar",
+          startBtn: 'Boshlash',
+          freeLessonBtn: 'Bepul dars',
+          students: 'Talabalar',
+          avgScore: "O'rtacha ball",
+          success: 'Muvaffaqiyat',
+          teachers: "O'qituvchilar",
+          teamTag: 'Jamoamiz',
+          teamTitle: 'Professional Mentorlar',
+          teamDesc:
+            "Har bir soha bo'yicha chuqur bilim va tajribaga ega ekspertlar",
+          resultsTag: "Ko'rsatkichlar",
+          resultsTitle: "Haqiqiy natijalar, yuqori ko'rsatkichlar.",
           resultsDesc:
             "Minglab talabalarimiz kabi siz ham o'z maqsadingizga erishing",
-          resultsStatsLabel: [
-            "Ro'yxatdan o'tganlar",
-            "O'rtacha ball",
-            'Muvaffaqiyat',
-          ],
-          studentsTitle: 'Top natijalarimiz',
-          studentsSubtitle:
+          achievementsTag: 'Yutuqlar',
+          achievementsTitle: 'Top natijalarimiz',
+          achievementsDesc:
             'Darslarimizda qatnashgan talabalarning haqiqiy natijalari va yutuqlari.',
-          successLabel: 'Muvaffaqiyatli',
-          scoreLabel: 'IELTS balli',
+          academic: 'Academic',
+          general: 'General',
+          ieltsScore: 'IELTS Ball',
+          successful: 'Muvaffaqiyatli',
         }
       : {
+          heroTag: 'Best IELTS Platform of 2024',
           heroTitle: (
             <>
-              Learn IELTS{' '}
-              <span className="text-red-600 dark:text-red-500">faster</span> and
-              more effectively.
+              Learn IELTS <span className="text-red-600">faster</span> and more
+              effectively.
             </>
           ),
           heroDesc:
             'Master your IELTS preparation with our proven methodology and experienced instructors. Achieve your target score with confidence.',
-          btnStart: 'Get Started',
-          btnTrial: 'Free Trial Class',
-          badgeText: 'Best IELTS Platform of 2024',
-          statsLabel: ['Students', 'Average Score', 'Success', 'Instructors'],
-          educatorsTitle: 'Professional Mentors',
-          resultsTitle: 'Real Results. Proven Growth.',
-          resultsDesc:
-            'Join thousands of successful students who achieved their dreams',
-          resultsStatsLabel: [
-            'Registered Students',
-            'Average Score',
-            'Success Rate',
-          ],
-          studentsTitle: 'Our Top Results',
-          studentsSubtitle:
-            'Real results and achievements of students who attended our courses.',
-          successLabel: 'Successful',
-          scoreLabel: 'IELTS Score',
+          startBtn: 'Get Started',
+          freeLessonBtn: 'Free Lesson',
+          students: 'Students',
+          avgScore: 'Average Score',
+          success: 'Success Rate',
+          teachers: 'Teachers',
+          teamTag: 'Our Team',
+          teamTitle: 'Professional Mentors',
+          teamDesc: 'Experts with deep knowledge and experience in every field',
+          resultsTag: 'Statistics',
+          resultsTitle: 'Real results, high performance.',
+          resultsDesc: 'Join thousands of our students in achieving your goals',
+          achievementsTag: 'Achievements',
+          achievementsTitle: 'Top Results',
+          achievementsDesc:
+            'Real results and achievements of students who took our courses.',
+          academic: 'Academic',
+          general: 'General',
+          ieltsScore: 'IELTS Score',
+          successful: 'Successful',
         }
 
+  const educators = [
+    {
+      initials: 'SM',
+      name: 'Dr. Sarah Miller',
+      role: 'IELTS Expert',
+      rating: '5.0',
+    },
+    {
+      initials: 'JS',
+      name: 'Prof. John Smith',
+      role: 'Speaking Coach',
+      rating: '5.0',
+    },
+    {
+      initials: 'EC',
+      name: 'Dr. Emily Chen',
+      role: 'Writing Specialist',
+      rating: '5.0',
+    },
+    {
+      initials: 'DW',
+      name: 'Mr. David Wilson',
+      role: 'Reading Expert',
+      rating: '5.0',
+    },
+  ]
+
+  const topResults = [
+    {
+      initials: 'AK',
+      name: 'Alisher Karimov',
+      module: 'Academic',
+      score: '9.0',
+    },
+    {
+      initials: 'NR',
+      name: 'Nilufar Rahimova',
+      module: 'General',
+      score: '8.5',
+    },
+    { initials: 'JS', name: 'Jasur Saidov', module: 'Academic', score: '8.5' },
+    {
+      initials: 'GA',
+      name: 'Gulnora Azizova',
+      module: 'General',
+      score: '8.0',
+    },
+    {
+      initials: 'BT',
+      name: 'Bekzod Toshmatov',
+      module: 'Academic',
+      score: '9.0',
+    },
+    {
+      initials: 'MY',
+      name: 'Madina Yusupova',
+      module: 'General',
+      score: '8.5',
+    },
+  ]
+
   const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 },
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 selection:bg-red-100 selection:text-red-600">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-4 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-50 dark:bg-red-950/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-50 dark:bg-blue-950/10 rounded-full blur-[120px]" />
-        </div>
+      {/* HERO */}
+      <section className="min-h-screen grid lg:grid-cols-2 gap-8 lg:gap-16 items-center pt-28 lg:pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden max-w-7xl mx-auto">
+        <div className="absolute -top-32 -right-32 w-[560px] h-[560px] bg-red-100 dark:bg-red-900/20 rounded-full opacity-50 pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-600 dark:text-red-400 text-sm font-medium mb-8"
-          >
-            <CheckCircle2 className="w-4 h-4" />
-            <span>{content.badgeText}</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]"
-          >
+        <motion.div
+          initial="hidden"
+          animate={isVisible ? 'visible' : 'hidden'}
+          variants={fadeIn}
+          className="z-10"
+        >
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6 tracking-tight">
             {content.heroTitle}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed"
-          >
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-md mb-9 leading-relaxed">
             {content.heroDesc}
-          </motion.p>
+          </p>
+
+          <div className="flex gap-4 flex-wrap">
+            <button className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-4 rounded-2xl font-semibold text-sm sm:text-base transition-all shadow-lg shadow-red-500/25 flex items-center gap-2 hover:-translate-y-0.5">
+              {content.startBtn}
+              <ArrowRight size={18} />
+            </button>
+            <button className="bg-transparent border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white px-6 sm:px-8 py-4 rounded-2xl font-semibold text-sm sm:text-base transition-all hover:border-gray-900 dark:hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-2">
+              <Play size={18} />
+              {content.freeLessonBtn}
+            </button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          animate={isVisible ? 'visible' : 'hidden'}
+          variants={fadeIn}
+          transition={{ delay: 0.2 }}
+          className="flex flex-col gap-4 relative hidden lg:flex"
+        >
+          {[
+            { badge: content.academic, score: '9.0', name: 'Alisher Karimov' },
+            { badge: content.general, score: '8.5', name: 'Nilufar Rahimova' },
+            { badge: content.academic, score: '8.5', name: 'Jasur Saidov' },
+          ].map((card, i) => (
+            <motion.div
+              key={i}
+              initial={{ y: 0 }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, delay: i * 0.8 }}
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 relative shadow-lg"
+              style={{ marginLeft: i === 1 ? '2rem' : 0 }}
+            >
+              <div className="absolute top-4 right-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full px-3 py-1 text-xs font-semibold">
+                {card.badge}
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider mb-2">
+                {content.ieltsScore}
+              </div>
+              <div className="text-4xl font-extrabold text-gray-900 dark:text-white mb-1">
+                {card.score}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                {card.name}
+              </div>
+              <div className="flex text-yellow-500 text-sm">
+                {[...Array(5)].map((_, j) => (
+                  <Star key={j} size={14} fill="currentColor" />
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* STATS */}
+      <div className="bg-gray-50 dark:bg-gray-800/50 border-y border-gray-200 dark:border-gray-700 py-12 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-0">
+          {[
+            { icon: Users, value: '12K+', label: content.students },
+            { icon: Star, value: '8.5', label: content.avgScore },
+            { icon: TrendingUp, value: '98%', label: content.success },
+            { icon: Award, value: '50+', label: content.teachers },
+          ].map((stat, i) => (
+            <div
+              key={i}
+              className="text-center py-6 border-r border-gray-200 dark:border-gray-700 last:border-r-0"
+            >
+              <div className="w-10 h-10 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center mx-auto mb-3">
+                <stat.icon
+                  size={20}
+                  className="text-gray-700 dark:text-gray-300"
+                />
+              </div>
+              <div className="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">
+                {stat.value}
+              </div>
+              <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* EDUCATORS */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-4"
+          >
+            <div>
+              <div className="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
+                {content.teamTag}
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white max-w-lg">
+                {content.teamTitle}
+              </h2>
+            </div>
+            <p className="text-gray-600 dark:text-gray-400 text-sm max-w-xs leading-relaxed text-left lg:text-right">
+              {content.teamDesc}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {educators.map((educator, i) => (
+              <motion.div
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeIn}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-8 text-center cursor-pointer hover:border-red-500 hover:-translate-y-1 transition-all"
+              >
+                <div className="w-18 h-18 rounded-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center mx-auto mb-4 font-extrabold text-xl text-gray-700 dark:text-gray-300 transition-colors hover:border-red-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
+                  {educator.initials}
+                </div>
+                <div className="font-extrabold text-gray-900 dark:text-white mb-1">
+                  {educator.name}
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                  {educator.role}
+                </div>
+                <div className="inline-block text-xs font-semibold bg-red-50 dark:bg-red-900/20 text-red-600 rounded-full px-3 py-1">
+                  ★ {educator.rating} reyting
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RESULTS */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="mb-12"
+          >
+            <div className="text-xs font-bold text-red-400 uppercase tracking-widest mb-4">
+              {content.resultsTag}
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold max-w-2xl mb-4">
+              {content.resultsTitle}
+            </h2>
+            <p className="text-gray-400 max-w-md">{content.resultsDesc}</p>
+          </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10"
           >
-            <Link
-              to="/sign-in"
-              className="group bg-red-600 text-white px-8 py-3.5 rounded-full hover:bg-red-700 transition-all font-semibold text-base flex items-center gap-2 shadow-lg shadow-red-600/20"
-            >
-              {content.btnStart}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <button className="px-8 py-3.5 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all font-semibold text-base">
-              {content.btnTrial}
-            </button>
+            {[
+              { icon: Users, value: '12k+', label: "Ro'yxatdan o'tganlar" },
+              { icon: Star, value: '8.5', label: content.avgScore },
+              { icon: Award, value: '98%', label: 'Muvaffaqiyat darajasi' },
+            ].map((result, i) => (
+              <div
+                key={i}
+                className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center hover:border-red-500 transition-all"
+              >
+                <result.icon size={32} className="mb-4 text-red-400" />
+                <div className="text-5xl font-extrabold text-red-400 mb-2">
+                  {result.value}
+                </div>
+                <div className="text-sm text-gray-400 font-medium">
+                  {result.label}
+                </div>
+              </div>
+            ))}
           </motion.div>
-        </div>
-      </section>
 
-      {/* Stats Banner */}
-      <section className="py-10 px-4">
-        <div className="max-w-6xl mx-auto bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] p-10 border border-slate-100 dark:border-slate-700/50 shadow-sm">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="space-y-3"
+          >
             {[
-              { value: '12K+', label: content.statsLabel[0], icon: Users },
-              { value: '8.5', label: content.statsLabel[1], icon: Star },
-              { value: '98%', label: content.statsLabel[2], icon: TrendingUp },
-              {
-                value: '50+',
-                label: content.statsLabel[3],
-                icon: GraduationCap,
-              },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                {...fadeIn}
-                transition={{ delay: index * 0.1 }}
-                className="text-center group"
-              >
-                <div className="w-12 h-12 bg-white dark:bg-slate-700 rounded-2xl shadow-sm mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform border border-slate-100 dark:border-slate-600">
-                  <stat.icon className="w-6 h-6 text-red-600" />
-                </div>
-                <div className="text-3xl font-bold mb-1 tracking-tight">
-                  {stat.value}
-                </div>
-                <div className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Educators Section */}
-      <section className="py-24 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <motion.h2
-              {...fadeIn}
-              className="text-3xl sm:text-4xl font-bold mb-4"
-            >
-              {content.educatorsTitle}
-            </motion.h2>
-            <div className="w-20 h-1.5 bg-red-600 mx-auto rounded-full" />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { name: 'Dr. Sarah Miller', title: 'IELTS Expert', rating: 5 },
-              { name: 'Prof. John Smith', title: 'Speaking Coach', rating: 5 },
-              {
-                name: 'Dr. Emily Chen',
-                title: 'Writing Specialist',
-                rating: 5,
-              },
-              { name: 'Mr. David Wilson', title: 'Reading Expert', rating: 5 },
-            ].map((educator, index) => (
-              <motion.div
-                key={index}
-                {...fadeIn}
-                transition={{ delay: index * 0.1 }}
-                className="group relative bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all"
-              >
-                <div className="w-24 h-24 bg-slate-100 dark:bg-slate-700 rounded-full mx-auto mb-6 overflow-hidden flex items-center justify-center">
-                  <User className="w-12 h-12 text-slate-400 group-hover:text-red-500 transition-colors" />
-                </div>
-                <h3 className="font-bold text-lg mb-1">{educator.name}</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-                  {educator.title}
-                </p>
-                <div className="flex text-yellow-400 justify-center gap-1">
-                  {[...Array(educator.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Results Section */}
-      <section className="py-24 px-4 bg-slate-50 dark:bg-[#0a0f1c]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.h2
-              {...fadeIn}
-              className="text-3xl sm:text-5xl font-bold mb-6"
-            >
-              {content.resultsTitle}
-            </motion.h2>
-            <motion.p
-              {...fadeIn}
-              className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed"
-            >
-              {content.resultsDesc}
-            </motion.p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {[
-              {
-                value: '12k+',
-                label: content.resultsStatsLabel[0],
-                icon: Users,
-              },
-              { value: '8.5', label: content.resultsStatsLabel[1], icon: Star },
-              {
-                value: '98%',
-                label: content.resultsStatsLabel[2],
-                icon: Shield,
-              },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                {...fadeIn}
-                transition={{ delay: 0.2 + index * 0.1 }}
-                className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm text-center"
-              >
-                <div className="w-14 h-14 bg-red-50 dark:bg-red-500/10 rounded-2xl mx-auto mb-6 flex items-center justify-center">
-                  <stat.icon className="w-7 h-7 text-red-600" />
-                </div>
-                <div className="text-5xl font-extrabold text-red-600 mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-slate-500 font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { name: 'Michael Brown', score: '8.5' },
-              { name: 'Anna Lee', score: '9.0' },
-            ].map((student, index) => (
-              <motion.div
-                key={index}
-                {...fadeIn}
-                className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-6 rounded-2xl border border-slate-100 dark:border-slate-700 flex items-center justify-between"
+              { initials: 'MB', name: 'Michael Brown', score: '8.5' },
+              { initials: 'AL', name: 'Anna Lee', score: '9.0' },
+            ].map((student, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/25 transition-all"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center">
-                    <User className="w-7 h-7 text-slate-500" />
+                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center font-extrabold text-sm text-gray-300">
+                    {student.initials}
                   </div>
                   <div>
-                    <h4 className="font-bold">{student.name}</h4>
-                    <div className="flex gap-0.5 mt-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-3 h-3 text-yellow-400 fill-current"
-                        />
+                    <div className="font-semibold text-white">
+                      {student.name}
+                    </div>
+                    <div className="flex text-yellow-500 text-xs mt-1">
+                      {[...Array(5)].map((_, j) => (
+                        <Star key={j} size={12} fill="currentColor" />
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 bg-green-50 dark:bg-green-500/10 px-4 py-2 rounded-xl border border-green-100 dark:border-green-500/20">
-                  <span className="text-2xl font-black text-green-600 leading-none">
+                <div className="bg-green-900/30 text-green-400 border border-green-500/25 rounded-xl px-4 py-2 flex items-center gap-2">
+                  <span className="text-2xl font-extrabold">
                     {student.score}
                   </span>
-                  <Award className="w-5 h-5 text-green-500" />
+                  <span className="text-xs font-medium opacity-70">IELTS</span>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Success Cards Section */}
-      <section className="py-24 px-4 bg-white dark:bg-[#0f172a]">
+      {/* TOP RESULTS */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div className="text-left">
-              <motion.h2 {...fadeIn} className="text-3xl font-bold mb-2">
-                {content.studentsTitle}
-              </motion.h2>
-              <div className="w-16 h-1 bg-red-600 rounded-full" />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 gap-4"
+          >
+            <div>
+              <div className="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
+                {content.achievementsTag}
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white">
+                {content.achievementsTitle}
+              </h2>
             </div>
-            <p className="text-slate-500 max-w-sm">
-              {content.studentsSubtitle}
+            <p className="text-gray-600 dark:text-gray-400 text-sm max-w-xs leading-relaxed text-left lg:text-right">
+              {content.achievementsDesc}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { name: 'Alisher Karimov', score: '9.0', module: 'Academic' },
-              { name: 'Nilufar Rahimova', score: '8.5', module: 'General' },
-              { name: 'Jasur Saidov', score: '8.5', module: 'Academic' },
-              { name: 'Gulnora Azizova', score: '8.0', module: 'General' },
-              { name: 'Bekzod Toshmatov', score: '9.0', module: 'Academic' },
-              { name: 'Madina Yusupova', score: '8.5', module: 'General' },
-            ].map((student, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {topResults.map((result, i) => (
               <motion.div
-                key={index}
-                {...fadeIn}
-                transition={{ delay: index * 0.05 }}
-                className="group bg-slate-50 dark:bg-slate-800/30 rounded-[1.5rem] p-6 border border-slate-100 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:border-red-100 dark:hover:border-red-900/30 transition-all"
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeIn}
+                transition={{ delay: i * 0.05 }}
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:border-red-500/20 transition-all"
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border border-slate-100 dark:border-slate-600">
-                    <User className="w-6 h-6 text-slate-400 group-hover:text-red-500 transition-colors" />
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-11 h-11 rounded-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 flex items-center justify-center font-extrabold text-sm text-gray-700 dark:text-gray-300">
+                    {result.initials}
                   </div>
                   <div>
-                    <h3 className="font-bold group-hover:text-red-600 transition-colors">
-                      {student.name}
-                    </h3>
-                    <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-                      {student.module}
-                    </p>
+                    <div className="font-extrabold text-gray-900 dark:text-white">
+                      {result.name}
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1">
+                      {result.module}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-slate-500 text-sm">
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
-                    {content.successLabel}
+                  <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400 font-medium">
+                    <CheckCircle size={16} />
+                    {content.successful}
                   </div>
-                  <div className="text-3xl font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform">
-                    {student.score}
+                  <div className="text-3xl font-extrabold text-gray-900 dark:text-white">
+                    {result.score}
                   </div>
                 </div>
               </motion.div>
