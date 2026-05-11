@@ -12,7 +12,10 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../hooks/useLanguage'
+import { Reveal } from '../components/animation/Reveal'
+import { StaggerText } from '../components/animation/StaggerText'
+import { cardMotion } from '../components/animation/cardMotion'
 
 export const AboutPage: React.FC = () => {
   const { language } = useLanguage()
@@ -153,22 +156,19 @@ export const AboutPage: React.FC = () => {
 
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+            <Reveal>
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-600 text-xs font-bold uppercase tracking-widest mb-8">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{content.badgeText}</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-8">
-                {content.heroTitle}
-              </h1>
+              <StaggerText
+                text={content.heroTitle}
+                className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-8 block"
+              />
               <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">
                 {content.heroDesc}
               </p>
-            </motion.div>
+            </Reveal>
 
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -209,7 +209,9 @@ export const AboutPage: React.FC = () => {
           ].map((item, i) => (
             <motion.div
               key={i}
-              whileHover={{ y: -10 }}
+              initial="rest"
+              whileHover="hover"
+              variants={i === 0 ? cardMotion.tiltLeft : cardMotion.softLift}
               className={`relative p-10 rounded-[2.5rem] overflow-hidden bg-gradient-to-br ${item.color} text-white shadow-2xl`}
             >
               <div className="absolute top-0 right-0 p-8 opacity-10">
@@ -281,7 +283,9 @@ export const AboutPage: React.FC = () => {
             {content.principles.map((p, index) => (
               <motion.div
                 key={index}
-                whileHover={{ y: -10 }}
+                initial="rest"
+                whileHover="hover"
+                variants={index % 2 === 0 ? cardMotion.glassFloat : cardMotion.tiltRight}
                 className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-[2rem] group hover:bg-white/10 transition-colors"
               >
                 <div className="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-600 transition-colors">
@@ -315,6 +319,8 @@ export const AboutPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
+                whileHover="hover"
+                variants={index % 2 === 0 ? cardMotion.softLift : cardMotion.tiltLeft}
                 className="relative p-10 bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none"
               >
                 <div className="absolute top-[-25px] left-10 text-6xl font-black text-red-600/20 dark:text-red-600/10">

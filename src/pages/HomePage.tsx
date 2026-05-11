@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { motion } from 'framer-motion'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../hooks/useLanguage'
+import { Reveal } from '../components/animation/Reveal'
+import { StaggerText } from '../components/animation/StaggerText'
+import { cardMotion } from '../components/animation/cardMotion'
 import {
   ArrowRight,
   Play,
@@ -14,12 +17,8 @@ import {
 } from 'lucide-react'
 
 export const HomePage: React.FC = () => {
+  const telegramUrl = 'https://t.me/karshi_linguapro'
   const { language } = useLanguage()
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
 
   const content =
     language === 'uz'
@@ -55,6 +54,8 @@ export const HomePage: React.FC = () => {
           general: 'General',
           ieltsScore: 'IELTS Ball',
           successful: 'Muvaffaqiyatli',
+          experienceLabel: 'Tajriba',
+          studentsLabel: 'Students',
         }
       : {
           heroTag: 'Best IELTS Platform of 2024',
@@ -86,6 +87,8 @@ export const HomePage: React.FC = () => {
           general: 'General',
           ieltsScore: 'IELTS Score',
           successful: 'Successful',
+          experienceLabel: 'Experience',
+          studentsLabel: 'Students',
         }
 
   const educators = [
@@ -94,24 +97,36 @@ export const HomePage: React.FC = () => {
       name: 'Dr. Sarah Miller',
       role: 'IELTS Expert',
       rating: '5.0',
+      experience: '12+ years',
+      students: '2,500+',
+      specialty: 'Academic IELTS',
     },
     {
       initials: 'JS',
       name: 'Prof. John Smith',
       role: 'Speaking Coach',
       rating: '5.0',
+      experience: '8+ years',
+      students: '1,800+',
+      specialty: 'Speaking Module',
     },
     {
       initials: 'EC',
       name: 'Dr. Emily Chen',
       role: 'Writing Specialist',
       rating: '5.0',
+      experience: '10+ years',
+      students: '2,100+',
+      specialty: 'Writing Module',
     },
     {
       initials: 'DW',
       name: 'Mr. David Wilson',
       role: 'Reading Expert',
       rating: '5.0',
+      experience: '15+ years',
+      students: '3,000+',
+      specialty: 'Reading Module',
     },
   ]
 
@@ -158,13 +173,12 @@ export const HomePage: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Header />
 
-      {/* HERO */}
-      <section className="min-h-screen grid lg:grid-cols-2 gap-8 lg:gap-16 items-center pt-28 lg:pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden max-w-7xl mx-auto">
+      <section className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center pt-28 lg:pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden max-w-7xl mx-auto">
         <div className="absolute -top-32 -right-32 w-[560px] h-[560px] bg-red-100 dark:bg-red-900/20 rounded-full opacity-50 pointer-events-none" />
 
         <motion.div
           initial="hidden"
-          animate={isVisible ? 'visible' : 'hidden'}
+          animate="visible"
           variants={fadeIn}
           className="z-10"
         >
@@ -177,11 +191,16 @@ export const HomePage: React.FC = () => {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-4 rounded-2xl font-semibold text-sm sm:text-base transition-all shadow-lg shadow-red-500/25 flex items-center gap-2 hover:-translate-y-0.5">
+            <a
+              href={telegramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-4 rounded-2xl font-black text-sm sm:text-base transition-all shadow-xl shadow-red-500/20 flex items-center gap-2"
+            >
               {content.startBtn}
               <ArrowRight size={18} />
-            </button>
-            <button className="bg-transparent border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white px-6 sm:px-8 py-4 rounded-2xl font-semibold text-sm sm:text-base transition-all hover:border-gray-900 dark:hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-2">
+            </a>
+            <button className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-4 rounded-2xl font-black text-sm sm:text-base transition-all shadow-xl shadow-red-500/20 flex items-center gap-2">
               <Play size={18} />
               {content.freeLessonBtn}
             </button>
@@ -190,7 +209,7 @@ export const HomePage: React.FC = () => {
 
         <motion.div
           initial="hidden"
-          animate={isVisible ? 'visible' : 'hidden'}
+          animate="visible"
           variants={fadeIn}
           transition={{ delay: 0.2 }}
           className="flex flex-col gap-4 relative hidden lg:flex"
@@ -202,9 +221,11 @@ export const HomePage: React.FC = () => {
           ].map((card, i) => (
             <motion.div
               key={i}
-              initial={{ y: 0 }}
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, delay: i * 0.8 }}
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.15 + i * 0.08 }}
+              whileHover="hover"
+              variants={i % 2 === 0 ? cardMotion.tiltLeft : cardMotion.tiltRight}
               className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 relative shadow-lg"
               style={{ marginLeft: i === 1 ? '2rem' : 0 }}
             >
@@ -230,7 +251,6 @@ export const HomePage: React.FC = () => {
         </motion.div>
       </section>
 
-      {/* STATS */}
       <div className="bg-gray-50 dark:bg-gray-800/50 border-y border-gray-200 dark:border-gray-700 py-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-0">
           {[
@@ -260,7 +280,6 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* EDUCATORS */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -274,9 +293,10 @@ export const HomePage: React.FC = () => {
               <div className="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
                 {content.teamTag}
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white max-w-lg">
-                {content.teamTitle}
-              </h2>
+              <StaggerText
+                text={content.teamTitle}
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white max-w-lg block"
+              />
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm max-w-xs leading-relaxed text-left lg:text-right">
               {content.teamDesc}
@@ -292,19 +312,67 @@ export const HomePage: React.FC = () => {
                 viewport={{ once: true }}
                 variants={fadeIn}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-8 text-center cursor-pointer hover:border-red-500 hover:-translate-y-1 transition-all"
+                whileHover={
+                  i % 2 === 0
+                    ? cardMotion.softLift.hover
+                    : cardMotion.tiltRight.hover
+                }
+                className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-red-500 transition-all shadow-md hover:shadow-xl"
               >
-                <div className="w-18 h-18 rounded-full bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center mx-auto mb-4 font-extrabold text-xl text-gray-700 dark:text-gray-300 transition-colors hover:border-red-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
-                  {educator.initials}
+                <div className="bg-gradient-to-r from-red-600 to-red-700 p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 font-extrabold text-2xl text-white">
+                    {educator.initials}
+                  </div>
+                  <div className="text-white font-bold text-lg">
+                    {educator.name}
+                  </div>
+                  <div className="text-red-100 text-sm font-medium">
+                    {educator.role}
+                  </div>
                 </div>
-                <div className="font-extrabold text-gray-900 dark:text-white mb-1">
-                  {educator.name}
-                </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                  {educator.role}
-                </div>
-                <div className="inline-block text-xs font-semibold bg-red-50 dark:bg-red-900/20 text-red-600 rounded-full px-3 py-1">
-                  ★ {educator.rating} reyting
+                <div className="p-5 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                      <Award className="w-4 h-4 text-red-600" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        Tajriba
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {educator.experience}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                      <Users className="w-4 h-4 text-red-600" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        Talabalar
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {educator.students}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                      <Star className="w-4 h-4 text-red-600" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        Reyting
+                      </div>
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        ★ {educator.rating}
+                      </div>
+                    </div>
+                  </div>
+                  <button className="w-full mt-4 bg-gray-900 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-sm transition-all">
+                    {educator.specialty}
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -312,24 +380,18 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* RESULTS */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="mb-12"
-          >
+          <Reveal className="mb-12">
             <div className="text-xs font-bold text-red-400 uppercase tracking-widest mb-4">
               {content.resultsTag}
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold max-w-2xl mb-4">
-              {content.resultsTitle}
-            </h2>
+            <StaggerText
+              text={content.resultsTitle}
+              className="text-3xl sm:text-4xl lg:text-5xl font-extrabold max-w-2xl mb-4 block"
+            />
             <p className="text-gray-400 max-w-md">{content.resultsDesc}</p>
-          </motion.div>
+          </Reveal>
 
           <motion.div
             initial="hidden"
@@ -343,8 +405,11 @@ export const HomePage: React.FC = () => {
               { icon: Star, value: '8.5', label: content.avgScore },
               { icon: Award, value: '98%', label: 'Muvaffaqiyat darajasi' },
             ].map((result, i) => (
-              <div
+              <motion.div
                 key={i}
+                initial="rest"
+                whileHover="hover"
+                variants={i === 1 ? cardMotion.glassFloat : cardMotion.softLift}
                 className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center hover:border-red-500 transition-all"
               >
                 <result.icon size={32} className="mb-4 text-red-400" />
@@ -354,7 +419,7 @@ export const HomePage: React.FC = () => {
                 <div className="text-sm text-gray-400 font-medium">
                   {result.label}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
 
@@ -369,8 +434,11 @@ export const HomePage: React.FC = () => {
               { initials: 'MB', name: 'Michael Brown', score: '8.5' },
               { initials: 'AL', name: 'Anna Lee', score: '9.0' },
             ].map((student, i) => (
-              <div
+              <motion.div
                 key={i}
+                initial="rest"
+                whileHover="hover"
+                variants={i % 2 === 0 ? cardMotion.tiltRight : cardMotion.tiltLeft}
                 className="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/25 transition-all"
               >
                 <div className="flex items-center gap-4">
@@ -394,13 +462,12 @@ export const HomePage: React.FC = () => {
                   </span>
                   <span className="text-xs font-medium opacity-70">IELTS</span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* TOP RESULTS */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -414,9 +481,10 @@ export const HomePage: React.FC = () => {
               <div className="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
                 {content.achievementsTag}
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white">
-                {content.achievementsTitle}
-              </h2>
+              <StaggerText
+                text={content.achievementsTitle}
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white block"
+              />
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm max-w-xs leading-relaxed text-left lg:text-right">
               {content.achievementsDesc}
@@ -432,6 +500,11 @@ export const HomePage: React.FC = () => {
                 viewport={{ once: true }}
                 variants={fadeIn}
                 transition={{ delay: i * 0.05 }}
+                whileHover={
+                  i % 2 === 0
+                    ? cardMotion.softLift.hover
+                    : cardMotion.tiltLeft.hover
+                }
                 className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:border-red-500/20 transition-all"
               >
                 <div className="flex items-center gap-4 mb-5">

@@ -11,7 +11,10 @@ import {
   MessageSquare,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../hooks/useLanguage'
+import { Reveal } from '../components/animation/Reveal'
+import { StaggerText } from '../components/animation/StaggerText'
+import { cardMotion } from '../components/animation/cardMotion'
 
 export const ContactPage: React.FC = () => {
   const { language } = useLanguage()
@@ -146,18 +149,15 @@ export const ContactPage: React.FC = () => {
         </div>
 
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
-              {content.heroTitle}
-            </h1>
+          <Reveal>
+            <StaggerText
+              text={content.heroTitle}
+              className="text-4xl md:text-6xl font-black tracking-tight mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent block"
+            />
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto font-medium">
               {content.heroDesc}
             </p>
-          </motion.div>
+          </Reveal>
         </div>
       </section>
 
@@ -171,6 +171,8 @@ export const ContactPage: React.FC = () => {
                 href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                whileHover="hover"
+                variants={cardMotion.softLift}
                 className="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-red-300 transition-all cursor-pointer block"
               >
                 <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center mb-4 text-red-600">
@@ -190,6 +192,8 @@ export const ContactPage: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
+                whileHover="hover"
+                variants={cardMotion.tiltRight}
                 className="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-300 transition-all cursor-pointer block"
               >
                 <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-4 text-blue-600">
@@ -208,6 +212,8 @@ export const ContactPage: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
+                whileHover="hover"
+                variants={cardMotion.glassFloat}
                 className="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm"
               >
                 <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mb-4 text-emerald-600">
@@ -228,6 +234,8 @@ export const ContactPage: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
+                whileHover="hover"
+                variants={cardMotion.tiltLeft}
                 className="p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-orange-300 transition-all cursor-pointer block"
               >
                 <div className="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center mb-4 text-orange-600">
@@ -374,7 +382,7 @@ export const ContactPage: React.FC = () => {
                         ? 'bg-gray-400 cursor-not-allowed'
                         : submitStatus === 'success'
                           ? 'bg-green-600 hover:bg-green-700'
-                          : 'bg-red-600 hover:bg-red-700 text-white'
+                          : 'bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white'
                     }`}
                   >
                     <span>
@@ -417,7 +425,7 @@ export const ContactPage: React.FC = () => {
               <div className="flex gap-2">
                 <a
                   href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
-                  className="px-4 py-2 bg-red-600 text-white rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors flex items-center gap-2"
+                  className="px-4 py-2 bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white rounded-xl font-semibold text-sm transition-colors flex items-center gap-2"
                 >
                   <Phone size={16} />
                   {language === 'uz' ? "Qo'ng'iroq" : 'Call'}

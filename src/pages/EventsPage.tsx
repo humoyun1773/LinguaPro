@@ -1,10 +1,21 @@
 import React from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { GraduationCap, Mic, PenTool } from 'lucide-react'
+import {
+  GraduationCap,
+  Mic,
+  PenTool,
+  ArrowRight,
+  Calendar,
+  Clock3,
+} from 'lucide-react'
 import { motion } from 'framer-motion'
+import { Reveal } from '../components/animation/Reveal'
+import { StaggerText } from '../components/animation/StaggerText'
 
 export const EventsPage: React.FC = () => {
+  const telegramUrl = 'https://t.me/karshi_linguapro'
+
   const events = [
     {
       title: 'IELTS Ustalik Darsi',
@@ -35,41 +46,34 @@ export const EventsPage: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <Header />
 
-      {/* Hero Section */}
-      <section className="pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 px-4">
+      <section className="relative overflow-hidden pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 px-4">
+        <div className="absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top,_rgba(239,68,68,0.12),_transparent_60%)]" />
         <div className="max-w-7xl mx-auto text-center">
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6"
-          >
-            Kelgusi Tadbirlar
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
-          >
-            O'rganish tajribangizni oshirish uchun bizning darslarimiz,
-            vebinarlarimiz va maxsus tadbirlarimizga qo'shiling.
-          </motion.p>
+          <Reveal>
+            <StaggerText
+              text="Kelgusi Tadbirlar"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 block"
+            />
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              O'rganish tajribangizni oshirish uchun bizning darslarimiz,
+              vebinarlarimiz va maxsus tadbirlarimizga qo'shiling.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Events Section */}
       <section className="py-12 sm:py-16 px-4 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
             {events.map((event, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow"
+                transition={{ duration: 0.55, delay: index * 0.1 }}
+                whileHover={{ y: -6, scale: 1.008 }}
+                className="group bg-white dark:bg-gray-800 rounded-[2rem] shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-red-500/10 transition-all"
               >
                 <div className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 h-36 sm:h-48 flex items-center justify-center border-b border-red-100 dark:border-red-700">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-red-700">
@@ -87,12 +91,24 @@ export const EventsPage: React.FC = () => {
                     {event.description}
                   </p>
                   <div className="flex justify-between items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 sm:mb-4">
-                    <span>📅 {event.date}</span>
-                    <span>⏰ {event.time}</span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4" />
+                      {event.date}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Clock3 className="w-4 h-4" />
+                      {event.time}
+                    </span>
                   </div>
-                  <button className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all">
+                  <a
+                    href={telegramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-gray-500/20 dark:shadow-red-500/20 transition-all flex items-center justify-center gap-2"
+                  >
                     Hozir Ro'yxatdan O'ting
-                  </button>
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </a>
                 </div>
               </motion.div>
             ))}

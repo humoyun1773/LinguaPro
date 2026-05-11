@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Instagram, Send } from 'lucide-react'
 
 export const Footer: React.FC = () => {
   const quickLinks = [
@@ -31,9 +32,22 @@ export const Footer: React.FC = () => {
               Learning City, LC 12345
             </p>
             <div className="mt-3 sm:mt-4 flex space-x-3 sm:space-x-4">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded-full"></div>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded-full"></div>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded-full"></div>
+              <a
+                href="https://www.instagram.com/linguapro.karshi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-600 to-pink-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+              >
+                <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              </a>
+              <a
+                href="https://t.me/karshi_linguapro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+              >
+                <Send className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              </a>
             </div>
           </div>
 

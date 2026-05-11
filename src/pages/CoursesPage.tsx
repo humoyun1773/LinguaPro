@@ -1,7 +1,6 @@
 import React from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { Link } from 'react-router-dom'
 import {
   GraduationCap,
   Clock,
@@ -11,9 +10,13 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useLanguage } from '../hooks/useLanguage'
+import { Reveal } from '../components/animation/Reveal'
+import { StaggerText } from '../components/animation/StaggerText'
+import { cardMotion } from '../components/animation/cardMotion'
 
 export const CoursesPage: React.FC = () => {
+  const telegramUrl = 'https://t.me/karshi_linguapro'
   const { language } = useLanguage()
 
   const content =
@@ -97,18 +100,15 @@ export const CoursesPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <Reveal>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-sm font-bold mb-6">
               <Star className="w-4 h-4 fill-current" />
               <span>O'zbekistondagi eng yaxshi IELTS markazi</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6">
-              {content.heroTitle}
-            </h1>
+            <StaggerText
+              text={content.heroTitle}
+              className="text-4xl md:text-6xl font-black leading-tight mb-6 block"
+            />
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl">
               {content.heroDesc}
             </p>
@@ -122,7 +122,7 @@ export const CoursesPage: React.FC = () => {
                 ustozlar
               </div>
             </div>
-          </motion.div>
+          </Reveal>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -157,9 +157,10 @@ export const CoursesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                {content.featuredTitle}
-              </h2>
+              <StaggerText
+                text={content.featuredTitle}
+                className="text-3xl md:text-4xl font-black mb-4 block"
+              />
               <div className="h-1.5 w-20 bg-red-600 rounded-full" />
             </div>
           </div>
@@ -172,6 +173,11 @@ export const CoursesPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
+                whileHover={
+                  index % 2 === 0
+                    ? cardMotion.softLift.hover
+                    : cardMotion.tiltRight.hover
+                }
                 className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
               >
                 {/* Image Area */}
@@ -192,7 +198,8 @@ export const CoursesPage: React.FC = () => {
                 </div>
 
                 {/* Content Area */}
-                <div className="p-8">
+                <div className="p-8 relative">
+                  <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
@@ -221,10 +228,15 @@ export const CoursesPage: React.FC = () => {
                         {course.duration}
                       </span>
                     </div>
-                    <button className="flex items-center gap-2 text-red-600 font-black text-sm uppercase tracking-wider group/btn">
+                    <a
+                      href={telegramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-red-600 font-black text-sm uppercase tracking-wider group/btn"
+                    >
                       {content.registerBtn}
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               </motion.div>
@@ -248,13 +260,15 @@ export const CoursesPage: React.FC = () => {
                 <p className="text-gray-300 dark:text-red-100 text-lg mb-10">
                   {content.ctaDesc}
                 </p>
-                <Link
-                  to="/sign-in"
-                  className="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all flex items-center gap-3"
+                <a
+                  href={telegramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-gray-500/20 dark:shadow-red-500/20 transition-all flex items-center gap-3"
                 >
                   <BookOpen className="w-5 h-5" />
                   {content.ctaBtn}
-                </Link>
+                </a>
               </div>
               <div className="hidden md:flex justify-end">
                 <div className="w-64 h-64 border-8 border-white/10 rounded-full flex items-center justify-center animate-pulse">

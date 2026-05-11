@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 import {
   Moon,
   Sun,
-  Menu,
   X,
   Globe,
   User,
   ChevronRight,
   LayoutGrid,
 } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
-import { useLanguage } from '../contexts/LanguageContext'
+import { useTheme } from '../hooks/useTheme'
+import { useLanguage } from '../hooks/useLanguage'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -118,15 +117,17 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Profile CTA */}
-            <Link
-              to="/sign-in"
-              className="group flex items-center justify-center w-12 h-12 md:w-auto md:px-6 bg-gray-900 dark:bg-red-700 text-white rounded-2xl font-bold text-sm hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all active:scale-95"
+            <a
+              href="https://t.me/karshi_linguapro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center w-12 h-12 md:w-auto md:px-6 bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white rounded-2xl font-bold text-sm hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all active:scale-95"
             >
               <User size={18} />
               <span className="hidden md:inline ml-2">
                 {language === 'uz' ? 'Kirish' : 'Sign In'}
               </span>
-            </Link>
+            </a>
 
             {/* Mobile Menu Button */}
             <button
@@ -210,13 +211,15 @@ export const Header: React.FC = () => {
                 >
                   {theme === 'light' ? <Moon /> : <Sun />}
                 </button>
-                <Link
-                  to="/sign-in"
+                <a
+                  href="https://t.me/karshi_linguapro"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="col-span-2 p-5 bg-red-700 text-white rounded-3xl font-black text-center shadow-lg shadow-red-700/30"
+                  className="col-span-2 p-5 bg-gray-900 dark:bg-red-600 text-white rounded-3xl font-black text-center shadow-lg shadow-gray-500/20 dark:shadow-red-700/30"
                 >
                   {language === 'uz' ? 'KIRISH' : 'SIGN IN'}
-                </Link>
+                </a>
               </div>
             </motion.div>
           </motion.div>
