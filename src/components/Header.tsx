@@ -12,6 +12,7 @@ import { useTheme } from '../hooks/useTheme'
 import { useLanguage } from '../hooks/useLanguage'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
+import logoImg from '../assets/ChatGPT Image 22 апр. 2026 г., 19_50_27.png'
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme()
@@ -60,7 +61,7 @@ export const Header: React.FC = () => {
           <Link to="/" className="flex items-center group relative">
             <div className="w-14 h-14 rounded-2xl overflow-hidden relative z-10">
               <img
-                src="/src/assets/ChatGPT Image 22 апр. 2026 г., 19_50_27.png"
+                src={logoImg}
                 alt="LinguaPro Logo"
                 className="w-full h-full object-cover"
               />

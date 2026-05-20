@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Instagram, Send } from 'lucide-react'
+import logoImg from '../assets/ChatGPT Image 22 апр. 2026 г., 19_50_27.png'
 
 export const Footer: React.FC = () => {
   const quickLinks = [
@@ -89,7 +90,7 @@ export const Footer: React.FC = () => {
             </ul>
             <div className="mt-6">
               <img
-                src="/src/assets/ChatGPT Image 22 апр. 2026 г., 19_50_27.png"
+                src={logoImg}
                 alt="LinguaPro Logo"
                 className="w-16 h-16 rounded-xl object-cover"
               />
