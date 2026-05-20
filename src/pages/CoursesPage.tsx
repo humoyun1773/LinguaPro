@@ -264,7 +264,7 @@ export const CoursesPage: React.FC = () => {
                   href={telegramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-gray-500/20 dark:shadow-red-500/20 transition-all flex items-center gap-3"
+                  className="bg-white hover:bg-gray-100 text-gray-900 dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-gray-500/20 dark:shadow-red-500/20 transition-all flex items-center gap-3"
                 >
                   <BookOpen className="w-5 h-5" />
                   {content.ctaBtn}
