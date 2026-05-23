@@ -1,33 +1,68 @@
-import React, { useState } from 'react'
-import { User, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
-import { useLanguage } from '../hooks/useLanguage'
-import { Reveal } from '../components/animation/Reveal'
-import { StaggerText } from '../components/animation/StaggerText'
+import React, { useState } from "react"
+import { User, Lock, Eye, EyeOff, ArrowRight, Loader } from "lucide-react"
+import { useLanguage } from "../hooks/useLanguage"
+import { Reveal } from "../components/animation/Reveal"
+import { StaggerText } from "../components/animation/StaggerText"
+import { login } from "../services/api"
 
 export const SignInPage: React.FC = () => {
   const { language } = useLanguage()
   const [showPassword, setShowPassword] = useState(false)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
 
   const content =
-    language === 'uz'
+    language === "uz"
       ? {
-          title: 'Kirish',
-          usernameLabel: 'Foydalanuvchi nomi',
-          passwordLabel: 'Parol',
-          submitBtn: 'Kirish',
+          title: "Kirish",
+          usernameLabel: "Foydalanuvchi nomi",
+          passwordLabel: "Parol",
+          submitBtn: "Kirish",
+          signingIn: "Kirish...",
+          invalidCredentials: "Noto'g'ri foydalanuvchi nomi yoki parol",
+          loginSuccess: "Muvaffaqiyatli kirildi!",
         }
       : {
-          title: 'Sign In',
-          usernameLabel: 'Username',
-          passwordLabel: 'Password',
-          submitBtn: 'Sign In',
+          title: "Sign In",
+          usernameLabel: "Username",
+          passwordLabel: "Password",
+          submitBtn: "Sign In",
+          signingIn: "Signing in...",
+          invalidCredentials: "Invalid username or password",
+          loginSuccess: "Successfully signed in!",
         }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    window.open('https://t.me/xuma701', '_blank')
+
+    if (!username || !password) {
+      setError(
+        language === "uz"
+          ? "Iltimos, barcha maydonlarni to'ldiring"
+          : "Please fill in all fields",
+      )
+      return
+    }
+
+    setLoading(true)
+    setError("")
+
+    const result = await login(username, password)
+
+    if (result.success) {
+      setSuccess(content.loginSuccess)
+      // Redirect to home page after successful login
+      setTimeout(() => {
+        window.location.href = "/"
+      }, 1500)
+    } else {
+      setError(result.error || content.invalidCredentials)
+    }
+
+    setLoading(false)
   }
 
   return (
@@ -46,6 +81,18 @@ export const SignInPage: React.FC = () => {
 
         <div className="relative z-10 bg-white/6 backdrop-blur-xl p-8 rounded-[2rem] shadow-[0_18px_60px_rgba(0,0,0,0.3)] border border-white/10">
           <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-200 text-sm">
+                {success}
+              </div>
+            )}
+
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-300">
                 {content.usernameLabel}
@@ -59,7 +106,8 @@ export const SignInPage: React.FC = () => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-gray-700/70 border border-gray-600 rounded-xl outline-none transition-all text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                  disabled={loading}
+                  className="w-full pl-12 pr-4 py-4 bg-gray-700/70 border border-gray-600 rounded-xl outline-none transition-all text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20 disabled:opacity-50"
                   placeholder="username"
                 />
               </div>
@@ -75,16 +123,18 @@ export const SignInPage: React.FC = () => {
                   size={20}
                 />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-12 py-4 bg-gray-700/70 border border-gray-600 rounded-xl outline-none transition-all text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                  disabled={loading}
+                  className="w-full pl-12 pr-12 py-4 bg-gray-700/70 border border-gray-600 rounded-xl outline-none transition-all text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20 disabled:opacity-50"
                   placeholder="........"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                  disabled={loading}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors disabled:opacity-50"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -93,10 +143,20 @@ export const SignInPage: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all flex items-center justify-center gap-3 group"
+              disabled={loading}
+              className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>{content.submitBtn}</span>
-              <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+              {loading ? (
+                <>
+                  <Loader size={20} className="animate-spin" />
+                  <span>{content.signingIn}</span>
+                </>
+              ) : (
+                <>
+                  <span>{content.submitBtn}</span>
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form>
         </div>
