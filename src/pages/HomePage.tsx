@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { motion } from 'framer-motion'
@@ -6,6 +6,7 @@ import { useLanguage } from '../hooks/useLanguage'
 import { Reveal } from '../components/animation/Reveal'
 import { StaggerText } from '../components/animation/StaggerText'
 import { cardMotion } from '../components/animation/cardMotion'
+import { Link } from 'react-router-dom'
 import {
   ArrowRight,
   Play,
@@ -14,11 +15,32 @@ import {
   TrendingUp,
   Award,
   CheckCircle,
+  Loader,
 } from 'lucide-react'
+import { fetchTeachers } from '../services/api'
 
 export const HomePage: React.FC = () => {
-  const telegramUrl = 'https://t.me/karshi_linguapro'
+  const telegramUrl = 'https://t.me/xuma701'
   const { language } = useLanguage()
+  const [teachers, setTeachers] = useState<any[]>([])
+  const [loadingTeachers, setLoadingTeachers] = useState(true)
+
+  useEffect(() => {
+    const loadTeachers = async () => {
+      try {
+        const result = await fetchTeachers()
+        if (result.success) {
+          setTeachers(result.data)
+        }
+      } catch (err) {
+        console.error('Error loading teachers:', err)
+      } finally {
+        setLoadingTeachers(false)
+      }
+    }
+
+    loadTeachers()
+  }, [])
 
   const content =
     language === 'uz'
@@ -42,6 +64,7 @@ export const HomePage: React.FC = () => {
           teamTitle: 'Professional Mentorlar',
           teamDesc:
             "Har bir soha bo'yicha chuqur bilim va tajribaga ega ekspertlar",
+          viewAllTeachers: "Barcha ustozlarni ko'rish",
           resultsTag: "Ko'rsatkichlar",
           resultsTitle: "Haqiqiy natijalar, yuqori ko'rsatkichlar.",
           resultsDesc:
@@ -76,6 +99,7 @@ export const HomePage: React.FC = () => {
           teamTag: 'Our Team',
           teamTitle: 'Professional Mentors',
           teamDesc: 'Experts with deep knowledge and experience in every field',
+          viewAllTeachers: 'View All Teachers',
           resultsTag: 'Statistics',
           resultsTitle: 'Real results, high performance.',
           resultsDesc: 'Join thousands of our students in achieving your goals',
@@ -91,44 +115,7 @@ export const HomePage: React.FC = () => {
           studentsLabel: 'Students',
         }
 
-  const educators = [
-    {
-      initials: 'SM',
-      name: 'Dr. Sarah Miller',
-      role: 'IELTS Expert',
-      rating: '5.0',
-      experience: '12+ years',
-      students: '2,500+',
-      specialty: 'Academic IELTS',
-    },
-    {
-      initials: 'JS',
-      name: 'Prof. John Smith',
-      role: 'Speaking Coach',
-      rating: '5.0',
-      experience: '8+ years',
-      students: '1,800+',
-      specialty: 'Speaking Module',
-    },
-    {
-      initials: 'EC',
-      name: 'Dr. Emily Chen',
-      role: 'Writing Specialist',
-      rating: '5.0',
-      experience: '10+ years',
-      students: '2,100+',
-      specialty: 'Writing Module',
-    },
-    {
-      initials: 'DW',
-      name: 'Mr. David Wilson',
-      role: 'Reading Expert',
-      rating: '5.0',
-      experience: '15+ years',
-      students: '3,000+',
-      specialty: 'Reading Module',
-    },
-  ]
+  const educators = teachers.length > 0 ? teachers : []
 
   const topResults = [
     {
@@ -225,7 +212,9 @@ export const HomePage: React.FC = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.15 + i * 0.08 }}
               whileHover="hover"
-              variants={i % 2 === 0 ? cardMotion.tiltLeft : cardMotion.tiltRight}
+              variants={
+                i % 2 === 0 ? cardMotion.tiltLeft : cardMotion.tiltRight
+              }
               className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 relative shadow-lg"
               style={{ marginLeft: i === 1 ? '2rem' : 0 }}
             >
@@ -321,7 +310,11 @@ export const HomePage: React.FC = () => {
               >
                 <div className="bg-gradient-to-r from-red-600 to-red-700 p-6 text-center">
                   <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 font-extrabold text-2xl text-white">
-                    {educator.initials}
+                    {educator.name
+                      .split(' ')
+                      .slice(0, 2)
+                      .map((n: string) => n[0])
+                      .join('')}
                   </div>
                   <div className="text-white font-bold text-lg">
                     {educator.name}
@@ -337,7 +330,7 @@ export const HomePage: React.FC = () => {
                     </div>
                     <div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">
-                        Tajriba
+                        {content.experienceLabel}
                       </div>
                       <div className="text-sm font-semibold text-gray-900 dark:text-white">
                         {educator.experience}
@@ -350,20 +343,20 @@ export const HomePage: React.FC = () => {
                     </div>
                     <div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">
-                        Talabalar
+                        {content.studentsLabel}
                       </div>
                       <div className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {educator.students}
+                        {educator.students}+
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
-                      <Star className="w-4 h-4 text-red-600" />
+                      <Star className="w-4 h-4 text-red-600 fill-red-600" />
                     </div>
                     <div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">
-                        Reyting
+                        {language === 'uz' ? 'Reyting' : 'Rating'}
                       </div>
                       <div className="text-sm font-semibold text-gray-900 dark:text-white">
                         ★ {educator.rating}
@@ -371,12 +364,33 @@ export const HomePage: React.FC = () => {
                     </div>
                   </div>
                   <button className="w-full mt-4 bg-gray-900 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-sm transition-all">
-                    {educator.specialty}
+                    {educator.specializations && educator.specializations[0]
+                      ? educator.specializations[0]
+                      : language === 'uz'
+                        ? "Ko'p bilim"
+                        : 'Specialist'}
                   </button>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* View All Teachers Link */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+            className="flex justify-center mt-10"
+          >
+            <Link
+              to="/teachers"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-all shadow-lg hover:shadow-xl"
+            >
+              {content.viewAllTeachers}
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -438,7 +452,9 @@ export const HomePage: React.FC = () => {
                 key={i}
                 initial="rest"
                 whileHover="hover"
-                variants={i % 2 === 0 ? cardMotion.tiltRight : cardMotion.tiltLeft}
+                variants={
+                  i % 2 === 0 ? cardMotion.tiltRight : cardMotion.tiltLeft
+                }
                 className="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/25 transition-all"
               >
                 <div className="flex items-center gap-4">

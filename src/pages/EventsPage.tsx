@@ -1,6 +1,6 @@
-import React from 'react'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
+import React from "react"
+import { Header } from "../components/Header"
+import { Footer } from "../components/Footer"
 import {
   GraduationCap,
   Mic,
@@ -8,36 +8,36 @@ import {
   ArrowRight,
   Calendar,
   Clock3,
-} from 'lucide-react'
-import { motion } from 'framer-motion'
-import { Reveal } from '../components/animation/Reveal'
-import { StaggerText } from '../components/animation/StaggerText'
+} from "lucide-react"
+import { motion } from "framer-motion"
+import { Reveal } from "../components/animation/Reveal"
+import { StaggerText } from "../components/animation/StaggerText"
 
 export const EventsPage: React.FC = () => {
-  const telegramUrl = 'https://t.me/karshi_linguapro'
+  const telegramUrl = "https://t.me/xuma701"
 
   const events = [
     {
-      title: 'IELTS Ustalik Darsi',
+      title: "IELTS Ustalik Darsi",
       description:
         "Barcha to'rtta IELTS modulini qamrab oluvchi intensiv dars tajribali rahbariyat bilan",
-      date: '15 Mart, 2024',
-      time: '10:00 - 16:00',
+      date: "15 Mart, 2024",
+      time: "10:00 - 16:00",
       icon: <GraduationCap className="w-16 h-16 text-red-700" />,
     },
     {
-      title: 'Gapirish Mahorati Bootcamp',
+      title: "Gapirish Mahorati Bootcamp",
       description:
         "Bizning intensiv mashg'ulotlarimiz bilan gapirish ishonchingizni oshiring",
-      date: '22 Mart, 2024',
-      time: '14:00 - 18:00',
+      date: "22 Mart, 2024",
+      time: "14:00 - 18:00",
       icon: <Mic className="w-16 h-16 text-red-700" />,
     },
     {
-      title: 'Yozish Mukammalligi Vebinar',
+      title: "Yozish Mukammalligi Vebinar",
       description: "Yuqori ball uchun ilg'or yozish texnikalarini o'rganing",
-      date: '29 Mart, 2024',
-      time: '11:00 - 13:00',
+      date: "29 Mart, 2024",
+      time: "11:00 - 13:00",
       icon: <PenTool className="w-16 h-16 text-red-700" />,
     },
   ]

@@ -32,12 +32,16 @@ export const Header: React.FC = () => {
           { name: 'Bosh sahifa', path: '/' },
           { name: 'Biz haqimizda', path: '/about' },
           { name: 'Kurslar', path: '/courses' },
+          { name: 'Ustozlar', path: '/teachers' },
+          { name: "O'quvchilar", path: '/students' },
           { name: 'Aloqa', path: '/contact' },
         ]
       : [
           { name: 'Home', path: '/' },
           { name: 'About Us', path: '/about' },
           { name: 'Courses', path: '/courses' },
+          { name: 'Teachers', path: '/teachers' },
+          { name: 'Students', path: '/students' },
           { name: 'Contact', path: '/contact' },
         ]
 
@@ -103,14 +107,14 @@ export const Header: React.FC = () => {
             <div className="hidden sm:flex items-center gap-1 bg-white dark:bg-gray-900 p-1 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
               <button
                 onClick={toggleLanguage}
-                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
                 title="Language"
               >
                 <Globe className="w-4 h-4 text-red-600" />
               </button>
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
               </button>
@@ -118,7 +122,7 @@ export const Header: React.FC = () => {
 
             {/* Profile CTA */}
             <a
-              href="https://t.me/karshi_linguapro"
+              href="https://t.me/xuma701"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center w-12 h-12 md:w-auto md:px-6 bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white rounded-2xl font-bold text-sm hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all active:scale-95"
@@ -207,12 +211,12 @@ export const Header: React.FC = () => {
                 </button>
                 <button
                   onClick={toggleTheme}
-                  className="p-5 bg-gray-100 dark:bg-gray-800 rounded-3xl flex items-center justify-center transition-all active:rotate-180"
+                  className="p-5 bg-gray-100 dark:bg-gray-800 rounded-3xl flex items-center justify-center"
                 >
                   {theme === 'light' ? <Moon /> : <Sun />}
                 </button>
                 <a
-                  href="https://t.me/karshi_linguapro"
+                  href="https://t.me/xuma701"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
+import React, { useEffect, useState } from "react"
+import { Header } from "../components/Header"
+import { Footer } from "../components/Footer"
 import {
   GraduationCap,
   Clock,
@@ -8,90 +8,74 @@ import {
   Star,
   BookOpen,
   CheckCircle2,
-} from 'lucide-react'
-import { motion } from 'framer-motion'
-import { useLanguage } from '../hooks/useLanguage'
-import { Reveal } from '../components/animation/Reveal'
-import { StaggerText } from '../components/animation/StaggerText'
-import { cardMotion } from '../components/animation/cardMotion'
+  Loader,
+} from "lucide-react"
+import { motion } from "framer-motion"
+import { useLanguage } from "../hooks/useLanguage"
+import { Reveal } from "../components/animation/Reveal"
+import { StaggerText } from "../components/animation/StaggerText"
+import { cardMotion } from "../components/animation/cardMotion"
+import { fetchCourses } from "../services/api"
 
 export const CoursesPage: React.FC = () => {
-  const telegramUrl = 'https://t.me/karshi_linguapro'
+  const telegramUrl = "https://t.me/xuma701"
   const { language } = useLanguage()
+  const [courses, setCourses] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const loadCourses = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const result = await fetchCourses()
+        if (result.success) {
+          setCourses(result.data)
+        } else {
+          setError(result.error || "Failed to load courses")
+        }
+      } catch (err) {
+        setError("Error loading courses")
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadCourses()
+  }, [])
 
   const content =
-    language === 'uz'
+    language === "uz"
       ? {
-          heroTitle: 'Kelajagingizni tillar orqali quring',
+          heroTitle: "Kelajagingizni tillar orqali quring",
           heroDesc:
-            'Xalqaro standartlarga asoslangan IELTS va umumiy ingliz tili kurslarimiz bilan orzuingizdagi natijaga erishing.',
-          featuredTitle: 'Bizning Kurslar',
+            "Xalqaro standartlarga asoslangan IELTS va umumiy ingliz tili kurslarimiz bilan orzuingizdagi natijaga erishing.",
+          featuredTitle: "Bizning Kurslar",
           registerBtn: "Ro'yxatdan o'tish",
-          duration: 'Davomiyligi',
-          ctaTitle: 'Qayerdan boshlashni bilmayapsizmi?',
+          duration: "Davomiyligi",
+          ctaTitle: "Qayerdan boshlashni bilmayapsizmi?",
           ctaDesc:
-            'Darajangizni aniqlash uchun bepul testimizni topshiring va mos kursni tanlang.',
-          ctaBtn: 'Testni boshlash',
+            "Darajangizni aniqlash uchun bepul testimizni topshiring va mos kursni tanlang.",
+          ctaBtn: "Testni boshlash",
+          loading: "Yuklanmoqda...",
+          error: "Kurslarni yuklashda xato",
         }
       : {
-          heroTitle: 'Build your future through languages',
+          heroTitle: "Build your future through languages",
           heroDesc:
-            'Achieve your dream score with our IELTS and General English courses based on international standards.',
-          featuredTitle: 'Our Courses',
-          registerBtn: 'Enroll Now',
-          duration: 'Duration',
-          ctaTitle: 'Not sure where to start?',
+            "Achieve your dream score with our IELTS and General English courses based on international standards.",
+          featuredTitle: "Our Courses",
+          registerBtn: "Enroll Now",
+          duration: "Duration",
+          ctaTitle: "Not sure where to start?",
           ctaDesc:
-            'Take our free placement test to determine your level and choose the right course.',
-          ctaBtn: 'Start Test',
+            "Take our free placement test to determine your level and choose the right course.",
+          ctaBtn: "Start Test",
+          loading: "Loading courses...",
+          error: "Error loading courses",
         }
-
-  const courses = [
-    {
-      title: 'IELTS Academic',
-      description:
-        'Universitetga kirish va akademik faoliyat uchun mo‘ljallangan intensiv tayyorgarlik.',
-      duration: '6 Weeks',
-      price: '$299',
-      rating: 4.9,
-      image:
-        'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
-      badge: 'Popular',
-    },
-    {
-      title: 'IELTS General',
-      description:
-        'Immigratsiya va xalqaro ish tajribasi uchun zarur bo‘lgan barcha ko‘nikmalar.',
-      duration: '8 Weeks',
-      price: '$349',
-      rating: 4.8,
-      image:
-        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
-      badge: 'Recommended',
-    },
-    {
-      title: 'Speaking Crash',
-      description:
-        'Gapirish ko‘nikmasini qisqa vaqt ichida ravonlashtirish va qo‘rquvni yengish.',
-      duration: '4 Weeks',
-      price: '$199',
-      rating: 5.0,
-      image:
-        'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&q=80',
-      badge: 'Intensive',
-    },
-    {
-      title: 'Writing Workshop',
-      description:
-        'Essay va tasklarni master darajasida yozish texnikalari va tahlili.',
-      duration: '2 Weeks',
-      price: '$199',
-      rating: 4.7,
-      image:
-        'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80',
-      badge: 'Workshop',
-    },
-  ]
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
@@ -165,83 +149,144 @@ export const CoursesPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {courses.map((course, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={
-                  index % 2 === 0
-                    ? cardMotion.softLift.hover
-                    : cardMotion.tiltRight.hover
-                }
-                className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
-              >
-                {/* Image Area */}
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute top-6 left-6">
-                    <span className="px-4 py-1.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-wider shadow-lg">
-                      {course.badge}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-6 right-6 bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-lg shadow-xl">
-                    {course.price}
-                  </div>
-                </div>
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <Loader className="w-8 h-8 text-red-600 animate-spin mr-3" />
+              <span className="text-lg font-semibold text-gray-600 dark:text-gray-400">
+                {content.loading}
+              </span>
+            </div>
+          )}
 
-                {/* Content Area */}
-                <div className="p-8 relative">
-                  <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-4 h-4 ${i < Math.floor(course.rating) ? 'fill-current' : ''}`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm font-bold opacity-60">
-                      ({course.rating})
-                    </span>
-                  </div>
+          {/* Error State */}
+          {error && !loading && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center">
+              <p className="text-red-600 dark:text-red-400 text-lg font-semibold">
+                {content.error}: {error}
+              </p>
+            </div>
+          )}
 
-                  <h3 className="text-2xl font-black mb-3 group-hover:text-red-600 transition-colors">
-                    {course.title}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">
-                    {course.description}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-6 border-t border-gray-100 dark:border-gray-800">
-                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                      <Clock className="w-4 h-4" />
-                      <span className="text-xs font-bold uppercase">
-                        {course.duration}
+          {/* Courses Grid */}
+          {!loading && courses.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+              {courses.map((course, index) => (
+                <motion.div
+                  key={course.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={
+                    index % 2 === 0
+                      ? cardMotion.softLift.hover
+                      : cardMotion.tiltRight.hover
+                  }
+                  className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
+                >
+                  {/* Image Area */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute top-6 left-6">
+                      <span className="px-4 py-1.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-wider shadow-lg">
+                        {course.badge}
                       </span>
                     </div>
-                    <a
-                      href={telegramUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-red-600 font-black text-sm uppercase tracking-wider group/btn"
-                    >
-                      {content.registerBtn}
-                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </a>
+                    <div className="absolute bottom-6 right-6 bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-lg shadow-xl">
+                      ${course.price}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+
+                  {/* Content Area */}
+                  <div className="p-8 relative">
+                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                    {/* Instructor Info */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        {course.instructor
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </div>
+                      <div className="text-sm">
+                        <p className="font-semibold text-gray-700 dark:text-gray-300">
+                          {course.instructor}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {course.level}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="flex text-yellow-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-4 h-4 ${
+                              i < Math.floor(course.rating)
+                                ? "fill-current"
+                                : ""
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-sm font-bold opacity-60">
+                        ({course.rating}) {course.reviews} reviews
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-black mb-3 group-hover:text-red-600 transition-colors">
+                      {course.title}
+                    </h3>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-3">
+                      {course.description}
+                    </p>
+
+                    {/* Course Stats */}
+                    <div className="flex gap-4 mb-6 text-xs text-gray-600 dark:text-gray-400">
+                      <span>📚 {course.lessons} lessons</span>
+                      <span>👥 {course.students_enrolled} enrolled</span>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-6 border-t border-gray-100 dark:border-gray-800">
+                      <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <Clock className="w-4 h-4" />
+                        <span className="text-xs font-bold uppercase">
+                          {course.duration}
+                        </span>
+                      </div>
+                      <a
+                        href={telegramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-red-600 font-black text-sm uppercase tracking-wider group/btn hover:text-red-700"
+                      >
+                        {content.registerBtn}
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!loading && courses.length === 0 && !error && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 dark:text-gray-400 text-lg">
+                {language === "uz" ? "Kurslar topilmadi" : "No courses found"}
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

@@ -27,7 +27,7 @@ export const SignInPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    window.open('https://t.me/karshi_linguapro', '_blank')
+    window.open('https://t.me/xuma701', '_blank')
   }
 
   return (
