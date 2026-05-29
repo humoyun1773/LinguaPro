@@ -104,7 +104,7 @@ export const EventsPage: React.FC = () => {
                     href={telegramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-gray-500/20 dark:shadow-red-500/20 transition-all flex items-center justify-center gap-2"
+                    className="btn-primary btn-full py-4"
                   >
                     Hozir Ro'yxatdan O'ting
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />

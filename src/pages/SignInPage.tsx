@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { User, Lock, Eye, EyeOff, ArrowRight, Loader } from "lucide-react"
+import { User, Lock, Eye, EyeOff, ArrowRight } from "lucide-react"
 import { useLanguage } from "../hooks/useLanguage"
 import { Reveal } from "../components/animation/Reveal"
 import { StaggerText } from "../components/animation/StaggerText"
+import { LoadingState } from "../components/LoadingState"
 import { login } from "../services/api"
 
 export const SignInPage: React.FC = () => {
@@ -144,13 +145,10 @@ export const SignInPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary btn-full py-4 text-lg"
             >
               {loading ? (
-                <>
-                  <Loader size={20} className="animate-spin" />
-                  <span>{content.signingIn}</span>
-                </>
+                <LoadingState label={content.signingIn} compact />
               ) : (
                 <>
                   <span>{content.submitBtn}</span>

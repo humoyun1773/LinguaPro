@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
-import { motion } from 'framer-motion'
-import { useLanguage } from '../hooks/useLanguage'
-import { Reveal } from '../components/animation/Reveal'
-import { StaggerText } from '../components/animation/StaggerText'
-import { cardMotion } from '../components/animation/cardMotion'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react"
+import { Header } from "../components/Header"
+import { Footer } from "../components/Footer"
+import { motion } from "framer-motion"
+import { useLanguage } from "../hooks/useLanguage"
+import { StaggerText } from "../components/animation/StaggerText"
+import { Link } from "react-router-dom"
 import {
   ArrowRight,
   Play,
@@ -15,534 +13,451 @@ import {
   TrendingUp,
   Award,
   CheckCircle,
-  Loader,
-} from 'lucide-react'
-import { fetchTeachers } from '../services/api'
+  Zap,
+  Shield,
+  Clock,
+  Target,
+  Quote,
+} from "lucide-react"
+import { fetchTeachers } from "../services/api"
+
+interface TeacherSummary {
+  id: number
+  name: string
+  role: string
+  experience: string
+  students: number
+  rating: string | number
+}
 
 export const HomePage: React.FC = () => {
-  const telegramUrl = 'https://t.me/xuma701'
+  const telegramUrl = "https://t.me/xuma701"
   const { language } = useLanguage()
-  const [teachers, setTeachers] = useState<any[]>([])
-  const [loadingTeachers, setLoadingTeachers] = useState(true)
+  const [teachers, setTeachers] = useState<TeacherSummary[]>([])
 
   useEffect(() => {
     const loadTeachers = async () => {
       try {
         const result = await fetchTeachers()
         if (result.success) {
-          setTeachers(result.data)
+          setTeachers(result.data.slice(0, 4))
         }
       } catch (err) {
-        console.error('Error loading teachers:', err)
-      } finally {
-        setLoadingTeachers(false)
+        console.error("Error loading teachers:", err)
       }
     }
-
     loadTeachers()
   }, [])
 
   const content =
-    language === 'uz'
+    language === "uz"
       ? {
-          heroTag: '2024-yilning eng yaxshi IELTS platformasi',
+          heroTag: "O‘zbekistonda IELTS bo‘yicha №1",
           heroTitle: (
             <>
-              IELTSni <span className="text-red-600">tezroq</span> va
-              samaraliroq o'rganing.
+              IELTSdan <span className="text-red-600">yuqori ball</span> olish
+              endi oson!
             </>
           ),
           heroDesc:
-            "Bizning isbotlangan metodologiyamiz va tajribali o'qituvchilarimiz bilan IELTS tayyoringizni mukammal o'ting. Maqsadli ballingizga ishonch bilan erishing.",
-          startBtn: 'Boshlash',
-          freeLessonBtn: 'Bepul dars',
-          students: 'Talabalar',
+            "Tajribali ustozlar, innovatsion usullar va shaxsiy yondashuv bilan 6.5–8.5 ball oralig‘ida natijaga erishing.",
+          startBtn: "Hozir boshlash",
+          freeLessonBtn: "Bepul sinov darsi",
+          students: "Talabalar",
+          ieltsScore: "IELTS ball",
           avgScore: "O'rtacha ball",
-          success: 'Muvaffaqiyat',
-          teachers: "O'qituvchilar",
-          teamTag: 'Jamoamiz',
-          teamTitle: 'Professional Mentorlar',
+          success: "Muvaffaqiyat",
+          teachers: "Ustozlar",
+          teamTag: "Bizning Jamoa",
+          teamTitle: "Sizning Muvaffaqiyatingiz Uchun Eng Yaxshilar",
           teamDesc:
-            "Har bir soha bo'yicha chuqur bilim va tajribaga ega ekspertlar",
-          viewAllTeachers: "Barcha ustozlarni ko'rish",
-          resultsTag: "Ko'rsatkichlar",
-          resultsTitle: "Haqiqiy natijalar, yuqori ko'rsatkichlar.",
-          resultsDesc:
-            "Minglab talabalarimiz kabi siz ham o'z maqsadingizga erishing",
-          achievementsTag: 'Yutuqlar',
-          achievementsTitle: 'Top natijalarimiz',
-          achievementsDesc:
-            'Darslarimizda qatnashgan talabalarning haqiqiy natijalari va yutuqlari.',
-          academic: 'Academic',
-          general: 'General',
-          ieltsScore: 'IELTS Ball',
-          successful: 'Muvaffaqiyatli',
-          experienceLabel: 'Tajriba',
-          studentsLabel: 'Students',
+            "Natijasi isbotlangan, 5+ yillik tajribaga ega professional ustozlar",
+          viewAllTeachers: "Barcha ustozlarni ko‘rish",
+          whyUsTag: "Nima uchun biz?",
+          whyUsTitle: "Sizni boshqalardan ajratib turadigan farqlar",
+          resultsTag: "Yutuqlarimiz",
+          resultsTitle: "Haqiqiy Natijalar",
+          testimonialsTag: "Talabalarimiz nima deydi?",
+          testimonialsTitle: "Haqiqiy Sharhlar",
+          academic: "Academic",
+          general: "General",
+          successful: "Muvaffaqiyatli",
+          experienceLabel: "Tajriba",
+          studentsLabel: "O‘quvchilar",
         }
       : {
-          heroTag: 'Best IELTS Platform of 2024',
+          heroTag: "№1 IELTS Center in Uzbekistan",
           heroTitle: (
             <>
-              Learn IELTS <span className="text-red-600">faster</span> and more
-              effectively.
+              Get <span className="text-red-600">High IELTS Score</span> Easily!
             </>
           ),
           heroDesc:
-            'Master your IELTS preparation with our proven methodology and experienced instructors. Achieve your target score with confidence.',
-          startBtn: 'Get Started',
-          freeLessonBtn: 'Free Lesson',
-          students: 'Students',
-          avgScore: 'Average Score',
-          success: 'Success Rate',
-          teachers: 'Teachers',
-          teamTag: 'Our Team',
-          teamTitle: 'Professional Mentors',
-          teamDesc: 'Experts with deep knowledge and experience in every field',
-          viewAllTeachers: 'View All Teachers',
-          resultsTag: 'Statistics',
-          resultsTitle: 'Real results, high performance.',
-          resultsDesc: 'Join thousands of our students in achieving your goals',
-          achievementsTag: 'Achievements',
-          achievementsTitle: 'Top Results',
-          achievementsDesc:
-            'Real results and achievements of students who took our courses.',
-          academic: 'Academic',
-          general: 'General',
-          ieltsScore: 'IELTS Score',
-          successful: 'Successful',
-          experienceLabel: 'Experience',
-          studentsLabel: 'Students',
+            "Experienced teachers, innovative methods, and personal approach to achieve 6.5–8.5 IELTS.",
+          startBtn: "Start Now",
+          freeLessonBtn: "Free Trial Lesson",
+          students: "Students",
+          ieltsScore: "IELTS Score",
+          avgScore: "Avg. Score",
+          success: "Success Rate",
+          teachers: "Teachers",
+          teamTag: "Our Team",
+          teamTitle: "The Best For Your Success",
+          teamDesc: "Proven teachers with 5+ years experience",
+          viewAllTeachers: "View All Teachers",
+          whyUsTag: "Why Us?",
+          whyUsTitle: "What Makes Us Different",
+          resultsTag: "Our Achievements",
+          resultsTitle: "Real Results",
+          testimonialsTag: "What Our Students Say",
+          testimonialsTitle: "Real Testimonials",
+          academic: "Academic",
+          general: "General",
+          successful: "Successful",
+          experienceLabel: "Experience",
+          studentsLabel: "Students",
         }
-
-  const educators = teachers.length > 0 ? teachers : []
 
   const topResults = [
     {
-      initials: 'AK',
-      name: 'Alisher Karimov',
-      module: 'Academic',
-      score: '9.0',
+      initials: "AK",
+      name: "Alisher Karimov",
+      module: "Academic",
+      score: "9.0",
+      year: "2025",
     },
     {
-      initials: 'NR',
-      name: 'Nilufar Rahimova',
-      module: 'General',
-      score: '8.5',
-    },
-    { initials: 'JS', name: 'Jasur Saidov', module: 'Academic', score: '8.5' },
-    {
-      initials: 'GA',
-      name: 'Gulnora Azizova',
-      module: 'General',
-      score: '8.0',
+      initials: "NR",
+      name: "Nilufar Rahimova",
+      module: "General",
+      score: "8.5",
+      year: "2025",
     },
     {
-      initials: 'BT',
-      name: 'Bekzod Toshmatov',
-      module: 'Academic',
-      score: '9.0',
+      initials: "JS",
+      name: "Jasur Saidov",
+      module: "Academic",
+      score: "8.5",
+      year: "2024",
     },
     {
-      initials: 'MY',
-      name: 'Madina Yusupova',
-      module: 'General',
-      score: '8.5',
+      initials: "GA",
+      name: "Gulnora Azizova",
+      module: "General",
+      score: "8.0",
+      year: "2025",
     },
   ]
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
-  }
+  const whyUs = [
+    {
+      icon: Target,
+      title: "Shaxsiy yondashuv",
+      desc: "Har bir talabaga moslashtirilgan dars rejasi",
+    },
+    {
+      icon: Shield,
+      title: "Natija kafolati",
+      desc: "Ball ko‘tarmasa — pulni qaytaramiz",
+    },
+    {
+      icon: Clock,
+      title: "Moslashuvchan jadval",
+      desc: "24/7 qo‘llab-quvvatlash",
+    },
+    {
+      icon: Award,
+      title: "Haqiqiy tajriba",
+      desc: "IELTS examiner bo‘lgan ustozlar",
+    },
+  ]
+
+  const testimonials = [
+    {
+      name: "Madina Shermatova",
+      role: "Academic 8.0",
+      text: "Bu platforma hayotimni o‘zgartirdi. 3 oy ichida 5.5 dan 8.0 ga chiqdim!",
+      image: "MS",
+    },
+    {
+      name: "Sardor Umrzoqov",
+      role: "General 7.5",
+      text: "Ustozlar juda malakali. Har bir dars foydali o‘tadi. Tavsiya qilaman!",
+      image: "SU",
+    },
+    {
+      name: "Aygul Rahmonova",
+      role: "Academic 8.5",
+      text: "Online darslar juda qulay. Oilam bilan birga o‘qib, muvaffaqiyatga erishdim.",
+      image: "AR",
+    },
+  ]
+
+  // Hero kartalari (3 ta)
+  const heroCards = [
+    { badge: content.academic, score: "9.0", name: "Alisher Karimov" },
+    { badge: content.general, score: "8.5", name: "Nilufar Rahimova" },
+    { badge: content.academic, score: "8.5", name: "Jasur Saidov" },
+  ]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <Header />
 
-      <section className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center pt-28 lg:pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden max-w-7xl mx-auto">
-        <div className="absolute -top-32 -right-32 w-[560px] h-[560px] bg-red-100 dark:bg-red-900/20 rounded-full opacity-50 pointer-events-none" />
+      {/* ==================== HERO SECTION (3 ta card bilan) ==================== */}
+      <section className="relative pt-28 lg:pt-36 pb-24 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(at_top_right,#ef444410_0%,transparent_60%)]" />
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          className="z-10"
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6 tracking-tight">
-            {content.heroTitle}
-          </h1>
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
+            className="space-y-8"
+          >
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full font-semibold text-sm">
+              {content.heroTag}
+            </div>
 
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-md mb-9 leading-relaxed">
-            {content.heroDesc}
-          </p>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.08] tracking-tighter">
+              {content.heroTitle}
+            </h1>
 
-          <div className="flex gap-4 flex-wrap">
-            <a
-              href={telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-4 rounded-2xl font-black text-sm sm:text-base transition-all shadow-xl shadow-red-500/20 flex items-center gap-2"
-            >
-              {content.startBtn}
-              <ArrowRight size={18} />
-            </a>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-4 rounded-2xl font-black text-sm sm:text-base transition-all shadow-xl shadow-red-500/20 flex items-center gap-2">
-              <Play size={18} />
-              {content.freeLessonBtn}
-            </button>
-          </div>
-        </motion.div>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-lg">
+              {content.heroDesc}
+            </p>
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col gap-4 relative hidden lg:flex"
-        >
-          {[
-            { badge: content.academic, score: '9.0', name: 'Alisher Karimov' },
-            { badge: content.general, score: '8.5', name: 'Nilufar Rahimova' },
-            { badge: content.academic, score: '8.5', name: 'Jasur Saidov' },
-          ].map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.15 + i * 0.08 }}
-              whileHover="hover"
-              variants={
-                i % 2 === 0 ? cardMotion.tiltLeft : cardMotion.tiltRight
-              }
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 relative shadow-lg"
-              style={{ marginLeft: i === 1 ? '2rem' : 0 }}
-            >
-              <div className="absolute top-4 right-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full px-3 py-1 text-xs font-semibold">
-                {card.badge}
-              </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider mb-2">
-                {content.ieltsScore}
-              </div>
-              <div className="text-4xl font-extrabold text-gray-900 dark:text-white mb-1">
-                {card.score}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                {card.name}
-              </div>
-              <div className="flex text-yellow-500 text-sm">
-                {[...Array(5)].map((_, j) => (
-                  <Star key={j} size={14} fill="currentColor" />
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+            <div className="flex flex-wrap gap-4">
+              <Link to="/courses" className="btn-primary btn-xl">
+                {content.startBtn} <ArrowRight size={24} />
+              </Link>
 
-      <div className="bg-gray-50 dark:bg-gray-800/50 border-y border-gray-200 dark:border-gray-700 py-12 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-0">
-          {[
-            { icon: Users, value: '12K+', label: content.students },
-            { icon: Star, value: '8.5', label: content.avgScore },
-            { icon: TrendingUp, value: '98%', label: content.success },
-            { icon: Award, value: '50+', label: content.teachers },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              className="text-center py-6 border-r border-gray-200 dark:border-gray-700 last:border-r-0"
-            >
-              <div className="w-10 h-10 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center mx-auto mb-3">
-                <stat.icon
-                  size={20}
-                  className="text-gray-700 dark:text-gray-300"
-                />
+              <button className="btn-secondary btn-xl">
+                <Play size={24} className="text-red-600" />
+                {content.freeLessonBtn}
+              </button>
+            </div>
+
+            <div className="flex items-center gap-8 pt-4">
+              <div className="flex items-center gap-1 text-yellow-500">
+                ★★★★☆{" "}
+                <span className="text-gray-600 dark:text-gray-400 ml-2 text-sm">
+                  4.98
+                </span>
               </div>
-              <div className="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">
-                {stat.value}
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                {stat.label}
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                12,450+ talaba biz bilan o‘qimoqda
               </div>
             </div>
+          </motion.div>
+
+          {/* 3 ta Card (Hero o'ng tarafida) */}
+          <div className="hidden lg:flex flex-col gap-6 relative">
+            {heroCards.map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 + i * 0.15 }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 shadow-xl"
+                style={{
+                  marginLeft: i === 1 ? "40px" : i === 2 ? "20px" : "0",
+                }}
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      {content.ieltsScore}
+                    </div>
+                    <div className="text-5xl font-black text-red-600 mt-1">
+                      {card.score}
+                    </div>
+                    <div className="text-lg font-semibold mt-2">
+                      {card.name}
+                    </div>
+                  </div>
+
+                  <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-4 py-1.5 rounded-2xl">
+                    {card.badge}
+                  </div>
+                </div>
+
+                <div className="flex mt-4 text-yellow-500">
+                  {[...Array(5)].map((_, j) => (
+                    <Star key={j} size={16} fill="currentColor" />
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <div className="py-12 bg-white dark:bg-gray-900 border-y">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 px-6">
+          {[
+            { icon: Users, value: "12,450+", label: content.students },
+            { icon: Star, value: "8.7", label: content.avgScore },
+            { icon: TrendingUp, value: "96%", label: content.success },
+            { icon: Award, value: "48+", label: content.teachers },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.1 }}
+              className="text-center"
+            >
+              <stat.icon className="w-12 h-12 mx-auto mb-4 text-red-600" />
+              <div className="text-4xl font-black">{stat.value}</div>
+              <div className="text-gray-500 mt-2">{stat.label}</div>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+      {/* Why Us, Teachers, Testimonials, Top Results va Final CTA qismlari o'zgartirishsiz qoldi */}
+      {/* Why Us */}
+      <section className="py-20 px-4 bg-gray-50 dark:bg-gray-950">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-4"
-          >
-            <div>
-              <div className="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
-                {content.teamTag}
-              </div>
-              <StaggerText
-                text={content.teamTitle}
-                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white max-w-lg block"
-              />
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm max-w-xs leading-relaxed text-left lg:text-right">
-              {content.teamDesc}
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {educators.map((educator, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                transition={{ delay: i * 0.1 }}
-                whileHover={
-                  i % 2 === 0
-                    ? cardMotion.softLift.hover
-                    : cardMotion.tiltRight.hover
-                }
-                className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-red-500 transition-all shadow-md hover:shadow-xl"
-              >
-                <div className="bg-gradient-to-r from-red-600 to-red-700 p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 font-extrabold text-2xl text-white">
-                    {educator.name
-                      .split(' ')
-                      .slice(0, 2)
-                      .map((n: string) => n[0])
-                      .join('')}
-                  </div>
-                  <div className="text-white font-bold text-lg">
-                    {educator.name}
-                  </div>
-                  <div className="text-red-100 text-sm font-medium">
-                    {educator.role}
-                  </div>
-                </div>
-                <div className="p-5 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
-                      <Award className="w-4 h-4 text-red-600" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {content.experienceLabel}
-                      </div>
-                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {educator.experience}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
-                      <Users className="w-4 h-4 text-red-600" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {content.studentsLabel}
-                      </div>
-                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {educator.students}+
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
-                      <Star className="w-4 h-4 text-red-600 fill-red-600" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {language === 'uz' ? 'Reyting' : 'Rating'}
-                      </div>
-                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
-                        ★ {educator.rating}
-                      </div>
-                    </div>
-                  </div>
-                  <button className="w-full mt-4 bg-gray-900 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-sm transition-all">
-                    {educator.specializations && educator.specializations[0]
-                      ? educator.specializations[0]
-                      : language === 'uz'
-                        ? "Ko'p bilim"
-                        : 'Specialist'}
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* View All Teachers Link */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="flex justify-center mt-10"
-          >
-            <Link
-              to="/teachers"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-all shadow-lg hover:shadow-xl"
-            >
-              {content.viewAllTeachers}
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
-        <div className="max-w-6xl mx-auto">
-          <Reveal className="mb-12">
-            <div className="text-xs font-bold text-red-400 uppercase tracking-widest mb-4">
-              {content.resultsTag}
+          <div className="text-center mb-14">
+            <div className="text-red-600 font-bold tracking-widest text-sm">
+              {content.whyUsTag}
             </div>
             <StaggerText
-              text={content.resultsTitle}
-              className="text-3xl sm:text-4xl lg:text-5xl font-extrabold max-w-2xl mb-4 block"
+              text={content.whyUsTitle}
+              className="text-4xl sm:text-5xl font-black mt-3"
             />
-            <p className="text-gray-400 max-w-md">{content.resultsDesc}</p>
-          </Reveal>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10"
-          >
-            {[
-              { icon: Users, value: '12k+', label: "Ro'yxatdan o'tganlar" },
-              { icon: Star, value: '8.5', label: content.avgScore },
-              { icon: Award, value: '98%', label: 'Muvaffaqiyat darajasi' },
-            ].map((result, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whyUs.map((item, i) => (
               <motion.div
                 key={i}
-                initial="rest"
-                whileHover="hover"
-                variants={i === 1 ? cardMotion.glassFloat : cardMotion.softLift}
-                className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center hover:border-red-500 transition-all"
+                whileHover={{ y: -8 }}
+                className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 hover:border-red-500 transition-all"
               >
-                <result.icon size={32} className="mb-4 text-red-400" />
-                <div className="text-5xl font-extrabold text-red-400 mb-2">
-                  {result.value}
+                <div className="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6">
+                  <item.icon className="w-8 h-8 text-red-600" />
                 </div>
-                <div className="text-sm text-gray-400 font-medium">
-                  {result.label}
-                </div>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
               </motion.div>
             ))}
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="space-y-3"
-          >
-            {[
-              { initials: 'MB', name: 'Michael Brown', score: '8.5' },
-              { initials: 'AL', name: 'Anna Lee', score: '9.0' },
-            ].map((student, i) => (
-              <motion.div
-                key={i}
-                initial="rest"
-                whileHover="hover"
-                variants={
-                  i % 2 === 0 ? cardMotion.tiltRight : cardMotion.tiltLeft
-                }
-                className="flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/25 transition-all"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center font-extrabold text-sm text-gray-300">
-                    {student.initials}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-white">
-                      {student.name}
-                    </div>
-                    <div className="flex text-yellow-500 text-xs mt-1">
-                      {[...Array(5)].map((_, j) => (
-                        <Star key={j} size={12} fill="currentColor" />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-green-900/30 text-green-400 border border-green-500/25 rounded-xl px-4 py-2 flex items-center gap-2">
-                  <span className="text-2xl font-extrabold">
-                    {student.score}
-                  </span>
-                  <span className="text-xs font-medium opacity-70">IELTS</span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+      {/* Teachers */}
+      <section className="py-20 px-4 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 gap-4"
-          >
-            <div>
-              <div className="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
-                {content.achievementsTag}
-              </div>
-              <StaggerText
-                text={content.achievementsTitle}
-                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white block"
-              />
+          <div className="text-center mb-14">
+            <div className="text-red-600 uppercase font-bold tracking-widest text-sm">
+              {content.teamTag}
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm max-w-xs leading-relaxed text-left lg:text-right">
-              {content.achievementsDesc}
+            <StaggerText
+              text={content.teamTitle}
+              className="text-4xl sm:text-5xl font-black mt-3"
+            />
+            <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+              {content.teamDesc}
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {topResults.map((result, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {teachers.length > 0 ? (
+              teachers.map((teacher, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -12 }}
+                  className="group bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-800 transition-all"
+                >
+                  <div className="h-64 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white text-7xl font-black">
+                    {teacher.name
+                      .split(" ")
+                      .map((n: string) => n[0])
+                      .join("")}
+                  </div>
+                  <div className="p-7">
+                    <h3 className="font-bold text-2xl">{teacher.name}</h3>
+                    <p className="text-red-600">{teacher.role}</p>
+                    <div className="mt-6 space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">
+                          {content.experienceLabel}:
+                        </span>
+                        <span className="font-semibold">
+                          {teacher.experience}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">
+                          {content.studentsLabel}:
+                        </span>
+                        <span className="font-semibold">
+                          {teacher.students}+
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Reyting:</span>
+                        <span className="font-semibold text-yellow-500">
+                          ★★★★ {teacher.rating}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <p className="col-span-4 text-center py-12 text-gray-500">
+                Ustozlar yuklanmoqda...
+              </p>
+            )}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link to="/teachers" className="btn-primary btn-lg">
+              {content.viewAllTeachers} <ArrowRight />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 px-4 bg-gray-50 dark:bg-gray-950">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="text-red-600 font-bold tracking-widest text-sm">
+              {content.testimonialsTag}
+            </div>
+            <StaggerText
+              text={content.testimonialsTitle}
+              className="text-4xl sm:text-5xl font-black mt-3"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, i) => (
               <motion.div
                 key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                transition={{ delay: i * 0.05 }}
-                whileHover={
-                  i % 2 === 0
-                    ? cardMotion.softLift.hover
-                    : cardMotion.tiltLeft.hover
-                }
-                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-6 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:border-red-500/20 transition-all"
+                whileHover={{ y: -8 }}
+                className="bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all h-full flex flex-col"
               >
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-11 h-11 rounded-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 flex items-center justify-center font-extrabold text-sm text-gray-700 dark:text-gray-300">
-                    {result.initials}
+                <Quote className="w-10 h-10 text-red-500 mb-6" />
+                <p className="text-gray-700 dark:text-gray-300 italic mb-8 flex-1 leading-relaxed">
+                  "{testimonial.text}"
+                </p>
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center font-bold text-white text-xl shadow-inner">
+                    {testimonial.image}
                   </div>
                   <div>
-                    <div className="font-extrabold text-gray-900 dark:text-white">
-                      {result.name}
+                    <div className="font-semibold text-lg">
+                      {testimonial.name}
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1">
-                      {result.module}
+                    <div className="text-green-600 font-medium">
+                      {testimonial.role}
                     </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400 font-medium">
-                    <CheckCircle size={16} />
-                    {content.successful}
-                  </div>
-                  <div className="text-3xl font-extrabold text-gray-900 dark:text-white">
-                    {result.score}
                   </div>
                 </div>
               </motion.div>
@@ -550,6 +465,76 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Top Results */}
+      <section className="py-20 px-4 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="text-red-600 font-bold tracking-widest">
+              {content.resultsTag}
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-black mt-3">
+              {content.resultsTitle}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {topResults.map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.12)] transition-all duration-200 hover:border-red-200 hover:shadow-[0_26px_70px_rgba(185,28,28,0.18)] dark:border-gray-800 dark:bg-gray-900 dark:shadow-black/40 dark:hover:border-red-900/60"
+              >
+                <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-[3rem] bg-red-50 dark:bg-red-950/25" />
+                <div className="relative flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                      IELTS Score
+                    </div>
+                    <div className="mt-2 text-6xl font-black leading-none text-red-600 dark:text-red-400">
+                      {item.score}
+                    </div>
+                  </div>
+                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-red-600 text-2xl font-black text-white shadow-lg shadow-red-600/25">
+                    {item.initials}
+                  </div>
+                </div>
+                <div className="relative mt-8">
+                  <div className="text-xl font-black text-gray-950 dark:text-white">
+                    {item.name}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {item.module} • {item.year}
+                  </div>
+                </div>
+                <div className="mt-6 flex items-center gap-2 text-green-600">
+                  <CheckCircle size={20} /> {content.successful}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <div className="bg-gradient-to-r from-red-600 to-red-700 dark:from-red-700 dark:to-red-900 py-24 text-white text-center">
+        <div className="max-w-2xl mx-auto px-6">
+          <h2 className="text-4xl sm:text-5xl font-black mb-6">
+            Bugun boshlang — Ertaga orzuingizdagi ballga erishing!
+          </h2>
+          <p className="text-lg mb-10 opacity-90">
+            Birinchi dars mutlaqo bepul. Natijani o'zingiz ko'rasiz.
+          </p>
+          <a
+            href={telegramUrl}
+            target="_blank"
+            className="btn-primary btn-xl bg-white dark:bg-gray-100 text-red-600 hover:bg-gray-50 dark:hover:bg-gray-200 hover:text-red-700 transition-colors"
+          >
+            Bepul darsga yozilish <Zap className="w-7 h-7" />
+          </a>
+        </div>
+      </div>
 
       <Footer />
     </div>

@@ -191,7 +191,9 @@ export const ContactPage: React.FC = () => {
                 <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                   {content.phoneValue}
                 </p>
-                <p className="text-xs text-gray-400">{content.clickToCall}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {content.clickToCall}
+                </p>
               </motion.a>
 
               <motion.a
@@ -212,7 +214,9 @@ export const ContactPage: React.FC = () => {
                 <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                   {content.emailValue}
                 </p>
-                <p className="text-xs text-gray-400">{content.clickToEmail}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {content.clickToEmail}
+                </p>
               </motion.a>
 
               <motion.div
@@ -276,7 +280,7 @@ export const ContactPage: React.FC = () => {
                 <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                   {content.telegramValue}
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   {content.clickToTelegram}
                 </p>
               </motion.a>
@@ -409,12 +413,12 @@ export const ContactPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full md:w-auto px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-red-500/20 transition-all flex items-center justify-center gap-3 group ${
+                    className={`btn-primary btn-lg w-full md:w-auto group ${
                       isSubmitting
-                        ? "bg-gray-400 cursor-not-allowed"
+                        ? "cursor-not-allowed bg-gray-400 hover:bg-gray-400"
                         : submitStatus === "success"
                           ? "bg-green-600 hover:bg-green-700"
-                          : "bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white"
+                          : ""
                     }`}
                   >
                     <span>
@@ -457,7 +461,7 @@ export const ContactPage: React.FC = () => {
               <div className="flex gap-2">
                 <a
                   href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
-                  className="px-4 py-2 bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white rounded-xl font-semibold text-sm transition-colors flex items-center gap-2"
+                  className="btn-primary btn-sm"
                 >
                   <Phone size={16} />
                   {language === "uz" ? "Qo'ng'iroq" : "Call"}
@@ -466,7 +470,7 @@ export const ContactPage: React.FC = () => {
                   href={`https://www.google.com/maps/dir/?api=1&destination=${contactInfo.location.lat},${contactInfo.location.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center gap-2"
+                  className="btn-secondary btn-sm"
                 >
                   <MapPin size={16} />
                   {language === "uz" ? "Yo'l ko'rsatish" : "Directions"}
@@ -475,7 +479,7 @@ export const ContactPage: React.FC = () => {
 
               {/* Location Search Input */}
               <div className="relative md:w-80 lg:w-96">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <input
                   type="text"
                   value={mapQuery}

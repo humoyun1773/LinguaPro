@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Header } from "../components/Header"
 import { Footer } from "../components/Footer"
 import {
@@ -7,44 +7,89 @@ import {
   ArrowRight,
   Star,
   BookOpen,
+  Library,
+  Users,
   CheckCircle2,
-  Loader,
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { useLanguage } from "../hooks/useLanguage"
 import { Reveal } from "../components/animation/Reveal"
 import { StaggerText } from "../components/animation/StaggerText"
-import { cardMotion } from "../components/animation/cardMotion"
-import { fetchCourses } from "../services/api"
+
+interface Course {
+  id: number
+  image: string
+  title: string
+  badge: string
+  price: string | number
+  instructor: string
+  level: string
+  rating: string | number
+  reviews: number
+  description: string
+  lessons: number
+  students_enrolled: number
+  duration: string
+}
+
+const mockCourses: Course[] = [
+  {
+    id: 1,
+    image:
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80",
+    title: "IELTS Intensive",
+    badge: "Popular",
+    price: 120,
+    instructor: "Madina Karimova",
+    level: "Intermediate",
+    rating: 4.9,
+    reviews: 128,
+    description:
+      "Writing, speaking, listening va reading bo'yicha intensiv tayyorgarlik.",
+    lessons: 36,
+    students_enrolled: 420,
+    duration: "3 oy",
+  },
+  {
+    id: 2,
+    image:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80",
+    title: "General English",
+    badge: "Beginner",
+    price: 80,
+    instructor: "Azizbek Saidov",
+    level: "Starter",
+    rating: 4.8,
+    reviews: 94,
+    description:
+      "Boshlang'ich darajadan mustahkam grammatika va speaking ko'nikmalarigacha.",
+    lessons: 48,
+    students_enrolled: 610,
+    duration: "4 oy",
+  },
+  {
+    id: 3,
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=80",
+    title: "Speaking Club",
+    badge: "Live",
+    price: 45,
+    instructor: "Nigora Tursunova",
+    level: "All levels",
+    rating: 4.7,
+    reviews: 76,
+    description:
+      "Real mavzular, debate va fluency mashqlari orqali erkin gapirish amaliyoti.",
+    lessons: 24,
+    students_enrolled: 280,
+    duration: "2 oy",
+  },
+]
 
 export const CoursesPage: React.FC = () => {
   const telegramUrl = "https://t.me/xuma701"
   const { language } = useLanguage()
-  const [courses, setCourses] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const loadCourses = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const result = await fetchCourses()
-        if (result.success) {
-          setCourses(result.data)
-        } else {
-          setError(result.error || "Failed to load courses")
-        }
-      } catch (err) {
-        setError("Error loading courses")
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadCourses()
-  }, [])
+  const [courses] = useState<Course[]>(mockCourses)
 
   const content =
     language === "uz"
@@ -149,27 +194,8 @@ export const CoursesPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Loading State */}
-          {loading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader className="w-8 h-8 text-red-600 animate-spin mr-3" />
-              <span className="text-lg font-semibold text-gray-600 dark:text-gray-400">
-                {content.loading}
-              </span>
-            </div>
-          )}
-
-          {/* Error State */}
-          {error && !loading && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center">
-              <p className="text-red-600 dark:text-red-400 text-lg font-semibold">
-                {content.error}: {error}
-              </p>
-            </div>
-          )}
-
           {/* Courses Grid */}
-          {!loading && courses.length > 0 && (
+          {courses.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {courses.map((course, index) => (
                 <motion.div
@@ -178,85 +204,74 @@ export const CoursesPage: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={
-                    index % 2 === 0
-                      ? cardMotion.softLift.hover
-                      : cardMotion.tiltRight.hover
-                  }
-                  className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
+                  className="flex h-full flex-col overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,0.14)] transition-all duration-200 hover:-translate-y-1.5 hover:border-red-200 hover:shadow-[0_26px_70px_rgba(185,28,28,0.22)] dark:border-gray-800 dark:bg-gray-900 dark:shadow-black/45 dark:hover:border-red-900/60 dark:hover:shadow-red-950/35"
                 >
                   {/* Image Area */}
-                  <div className="relative h-64 overflow-hidden">
+                  <div className="relative h-52 overflow-hidden">
                     <img
                       src={course.image}
                       alt={course.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-6 left-6">
-                      <span className="px-4 py-1.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-wider shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-950/45 via-transparent to-transparent" />
+                    <div className="absolute left-5 top-5">
+                      <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-wide text-gray-800 shadow-sm dark:bg-gray-950/90 dark:text-gray-100">
                         {course.badge}
                       </span>
                     </div>
-                    <div className="absolute bottom-6 right-6 bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-lg shadow-xl">
+                    <div className="absolute bottom-5 right-5 rounded-xl bg-red-600 px-4 py-2 text-base font-black text-white shadow-lg">
                       ${course.price}
                     </div>
                   </div>
 
                   {/* Content Area */}
-                  <div className="p-8 relative">
-                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="flex flex-1 flex-col p-6">
 
                     {/* Instructor Info */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                        {course.instructor
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
+                    <div className="mb-5 flex items-center justify-between gap-3">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                          {course.instructor
+                            .split(" ")
+                            .map((n: string) => n[0])
+                            .join("")}
+                        </div>
+                        <div className="min-w-0 text-sm">
+                          <p className="truncate font-semibold text-gray-800 dark:text-gray-200">
+                            {course.instructor}
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {course.level}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-sm">
-                        <p className="font-semibold text-gray-700 dark:text-gray-300">
-                          {course.instructor}
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {course.level}
-                        </p>
+                      <div className="flex shrink-0 items-center gap-1 rounded-full bg-yellow-50 px-2.5 py-1 text-xs font-black text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
+                        <Star className="h-3.5 w-3.5 fill-current" />
+                        {course.rating}
                       </div>
                     </div>
 
-                    {/* Rating */}
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="flex text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.floor(course.rating)
-                                ? "fill-current"
-                                : ""
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm font-bold opacity-60">
-                        ({course.rating}) {course.reviews} reviews
-                      </span>
-                    </div>
-
-                    <h3 className="text-2xl font-black mb-3 group-hover:text-red-600 transition-colors">
+                    <h3 className="mb-3 text-2xl font-black leading-tight text-gray-950 dark:text-white">
                       {course.title}
                     </h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-3">
+                    <p className="mb-5 min-h-[4.5rem] text-sm leading-relaxed text-gray-500 dark:text-gray-400">
                       {course.description}
                     </p>
 
                     {/* Course Stats */}
-                    <div className="flex gap-4 mb-6 text-xs text-gray-600 dark:text-gray-400">
-                      <span>📚 {course.lessons} lessons</span>
-                      <span>👥 {course.students_enrolled} enrolled</span>
+
+                    <div className="mb-6 grid grid-cols-2 gap-3 text-xs font-bold text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center gap-2 rounded-2xl bg-gray-50 px-3 py-3 dark:bg-gray-800/70">
+                        <Library className="h-4 w-4 text-red-600 dark:text-red-400" />
+                        <span>{course.lessons} lessons</span>
+                      </div>
+                      <div className="flex items-center gap-2 rounded-2xl bg-gray-50 px-3 py-3 dark:bg-gray-800/70">
+                        <Users className="h-4 w-4 text-red-600 dark:text-red-400" />
+                        <span>{course.students_enrolled} enrolled</span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-6 border-t border-gray-100 dark:border-gray-800">
+                    <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-5 dark:border-gray-800">
                       <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
                         <Clock className="w-4 h-4" />
                         <span className="text-xs font-bold uppercase">
@@ -267,10 +282,10 @@ export const CoursesPage: React.FC = () => {
                         href={telegramUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-red-600 font-black text-sm uppercase tracking-wider group/btn hover:text-red-700"
+                        className="btn-primary btn-sm"
                       >
                         {content.registerBtn}
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        <ArrowRight className="w-4 h-4" />
                       </a>
                     </div>
                   </div>
@@ -280,7 +295,7 @@ export const CoursesPage: React.FC = () => {
           )}
 
           {/* Empty State */}
-          {!loading && courses.length === 0 && !error && (
+          {courses.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 dark:text-gray-400 text-lg">
                 {language === "uz" ? "Kurslar topilmadi" : "No courses found"}
@@ -309,7 +324,7 @@ export const CoursesPage: React.FC = () => {
                   href={telegramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black text-lg shadow-xl shadow-gray-500/20 dark:shadow-red-500/20 transition-all flex items-center gap-3"
+                  className="btn-primary btn-lg"
                 >
                   <BookOpen className="w-5 h-5" />
                   {content.ctaBtn}

@@ -1,48 +1,58 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 import {
   Moon,
   Sun,
   X,
   Globe,
   User,
+  ChevronDown,
   ChevronRight,
   LayoutGrid,
-} from 'lucide-react'
-import { useTheme } from '../hooks/useTheme'
-import { useLanguage } from '../hooks/useLanguage'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Link, useLocation } from 'react-router-dom'
+} from "lucide-react"
+import { useTheme } from "../hooks/useTheme"
+import { useLanguage } from "../hooks/useLanguage"
+import { motion, AnimatePresence } from "framer-motion"
+import { Link, useLocation } from "react-router-dom"
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme()
   const { language, toggleLanguage } = useLanguage()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSpecialistOpen, setIsSpecialistOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const navItems =
-    language === 'uz'
+    language === "uz"
       ? [
-          { name: 'Bosh sahifa', path: '/' },
-          { name: 'Biz haqimizda', path: '/about' },
-          { name: 'Kurslar', path: '/courses' },
-          { name: 'Ustozlar', path: '/teachers' },
-          { name: "O'quvchilar", path: '/students' },
-          { name: 'Aloqa', path: '/contact' },
+          { name: "Bosh sahifa", path: "/" },
+          { name: "Biz haqimizda", path: "/about" },
+          { name: "Kurslar", path: "/courses" },
+          {
+            name: "Specialist",
+            children: [
+              { name: "Ustozlar", path: "/teachers" },
+              { name: "O'quvchilar", path: "/students" },
+            ],
+          },
         ]
       : [
-          { name: 'Home', path: '/' },
-          { name: 'About Us', path: '/about' },
-          { name: 'Courses', path: '/courses' },
-          { name: 'Teachers', path: '/teachers' },
-          { name: 'Students', path: '/students' },
-          { name: 'Contact', path: '/contact' },
+          { name: "Home", path: "/" },
+          { name: "About Us", path: "/about" },
+          { name: "Courses", path: "/courses" },
+          {
+            name: "Specialist",
+            children: [
+              { name: "Teachers", path: "/teachers" },
+              { name: "Students", path: "/students" },
+            ],
+          },
         ]
 
   return (
@@ -51,14 +61,14 @@ export const Header: React.FC = () => {
       <div
         className={`absolute inset-0 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/80 dark:bg-gray-950/80 backdrop-blur-2xl shadow-2xl border-b border-gray-200/50 dark:border-gray-800/50 h-[70px]'
-            : 'bg-transparent h-[100px]'
+            ? "bg-white/80 dark:bg-gray-950/80 backdrop-blur-2xl shadow-2xl border-b border-gray-200/50 dark:border-gray-800/50 h-[70px]"
+            : "bg-transparent h-[100px]"
         }`}
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div
-          className={`flex justify-between items-center transition-all duration-500 ${scrolled ? 'h-[70px]' : 'h-[100px]'}`}
+          className={`flex justify-between items-center transition-all duration-500 ${scrolled ? "h-[70px]" : "h-[100px]"}`}
         >
           {/* --- Logo Section (As requested: Image stays same) --- */}
           <Link to="/" className="flex items-center group relative">
@@ -79,26 +89,105 @@ export const Header: React.FC = () => {
 
           {/* --- Minimalist Center Nav --- */}
           <nav className="hidden md:flex items-center space-x-2 bg-gray-100/50 dark:bg-white/5 p-1.5 rounded-2xl border border-gray-200/20 dark:border-white/5">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`relative px-5 py-2 text-sm font-bold rounded-xl transition-all duration-300 ${
-                  location.pathname === item.path
-                    ? 'text-white'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-red-600'
-                }`}
-              >
-                <span className="relative z-10">{item.name}</span>
-                {location.pathname === item.path && (
-                  <motion.div
-                    layoutId="pill"
-                    className="absolute inset-0 bg-red-700 rounded-xl shadow-[0_4px_12px_rgba(185,28,28,0.3)]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.children ? (
+                <div key={item.name} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setIsSpecialistOpen((open) => !open)}
+                    className={`relative flex items-center gap-1 px-5 py-2 text-sm font-bold rounded-xl transition-colors duration-150 ${
+                      item.children.some(
+                        (child) => location.pathname === child.path,
+                      )
+                        ? "text-white"
+                        : isSpecialistOpen
+                          ? "bg-white text-red-600 shadow-sm dark:bg-gray-900"
+                          : "text-gray-600 dark:text-gray-400 hover:text-red-600"
+                    }`}
+                  >
+                    <span className="relative z-10">{item.name}</span>
+                    <ChevronDown
+                      className={`relative z-10 h-4 w-4 transition-transform ${
+                        isSpecialistOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                    {item.children.some(
+                      (child) => location.pathname === child.path,
+                    ) && (
+                      <motion.div
+                        layoutId="pill"
+                        className="absolute inset-0 bg-red-700 rounded-xl shadow-[0_4px_12px_rgba(185,28,28,0.3)]"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                  </button>
+
+                  <AnimatePresence>
+                    {isSpecialistOpen && (
+                      <>
+                        <button
+                          type="button"
+                          aria-label="Close specialist menu"
+                          className="fixed inset-0 z-20 cursor-default"
+                          onClick={() => setIsSpecialistOpen(false)}
+                        />
+                        <motion.div
+                          initial={{ y: -4, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{ y: -4, opacity: 0 }}
+                          transition={{ duration: 0.12 }}
+                          className="absolute left-1/2 top-full z-30 mt-2 w-44 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-1.5 shadow-xl shadow-gray-900/10 dark:border-gray-800 dark:bg-gray-900"
+                        >
+                          <div className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900" />
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.path}
+                              to={child.path}
+                              onClick={() => setIsSpecialistOpen(false)}
+                              className={`relative flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors ${
+                                location.pathname === child.path
+                                  ? "bg-red-600 text-white"
+                                  : "text-gray-700 hover:bg-gray-100 hover:text-red-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                              }`}
+                            >
+                              <span>{child.name}</span>
+                              <ChevronRight size={16} className="opacity-45" />
+                            </Link>
+                          ))}
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative px-5 py-2 text-sm font-bold rounded-xl transition-all duration-300 ${
+                    location.pathname === item.path
+                      ? "text-white"
+                      : "text-gray-600 dark:text-gray-400 hover:text-red-600"
+                  }`}
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  {location.pathname === item.path && (
+                    <motion.div
+                      layoutId="pill"
+                      className="absolute inset-0 bg-red-700 rounded-xl shadow-[0_4px_12px_rgba(185,28,28,0.3)]"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </Link>
+              ),
+            )}
           </nav>
 
           {/* --- System Controls --- */}
@@ -107,16 +196,16 @@ export const Header: React.FC = () => {
             <div className="hidden sm:flex items-center gap-1 bg-white dark:bg-gray-900 p-1 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
               <button
                 onClick={toggleLanguage}
-                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="btn-icon h-9 w-9 rounded-lg shadow-none"
                 title="Language"
               >
                 <Globe className="w-4 h-4 text-red-600" />
               </button>
               <button
                 onClick={toggleTheme}
-                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="btn-icon h-9 w-9 rounded-lg shadow-none"
               >
-                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
               </button>
             </div>
 
@@ -125,18 +214,18 @@ export const Header: React.FC = () => {
               href="https://t.me/xuma701"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 md:w-auto md:px-6 bg-gray-900 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white rounded-2xl font-bold text-sm hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all active:scale-95"
+              className="btn-primary h-12 w-12 p-0 md:w-auto md:px-5"
             >
               <User size={18} />
               <span className="hidden md:inline ml-2">
-                {language === 'uz' ? 'Kirish' : 'Sign In'}
+                {language === "uz" ? "Kirish" : "Sign In"}
               </span>
             </a>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="btn-muted h-12 w-12 p-0 md:hidden"
             >
               {isMobileMenuOpen ? <X size={24} /> : <LayoutGrid size={24} />}
             </button>
@@ -169,7 +258,7 @@ export const Header: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-3 bg-gray-100 dark:bg-gray-800 rounded-2xl"
+                    className="btn-muted p-3"
                   >
                     <X />
                   </button>
@@ -178,25 +267,63 @@ export const Header: React.FC = () => {
                 <div className="space-y-4">
                   {navItems.map((item, i) => (
                     <motion.div
-                      key={item.path}
+                      key={item.path || item.name}
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: i * 0.1 }}
+                      transition={{ delay: i * 0.04 }}
                     >
-                      <Link
-                        to={item.path}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`group flex items-center justify-between p-5 rounded-3xl transition-all ${
-                          location.pathname === item.path
-                            ? 'bg-red-600 text-white'
-                            : 'bg-gray-50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        <span className="text-xl font-bold">{item.name}</span>
-                        <ChevronRight
-                          className={`transition-transform group-hover:translate-x-1 ${location.pathname === item.path ? 'opacity-100' : 'opacity-30'}`}
-                        />
-                      </Link>
+                      {item.children ? (
+                        <div
+                          className={`rounded-3xl border p-2 ${
+                            item.children.some(
+                              (child) => location.pathname === child.path,
+                            )
+                              ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300"
+                              : "border-gray-100 bg-gray-50 text-gray-700 dark:border-gray-800 dark:bg-gray-800/50 dark:text-gray-300"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between px-3 py-2">
+                            <span className="text-xl font-bold">
+                              {item.name}
+                            </span>
+                            <ChevronDown size={20} className="opacity-60" />
+                          </div>
+                          <div className="grid gap-1.5">
+                            {item.children.map((child) => (
+                              <Link
+                                key={child.path}
+                                to={child.path}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={`flex items-center justify-between rounded-2xl px-4 py-3 font-semibold transition-colors ${
+                                  location.pathname === child.path
+                                    ? "bg-red-600 text-white"
+                                    : "bg-white/70 text-gray-700 hover:bg-white dark:bg-gray-900/50 dark:text-gray-300 dark:hover:bg-gray-900"
+                                }`}
+                              >
+                                <span>{child.name}</span>
+                                <ChevronRight
+                                  className={`transition-transform ${location.pathname === child.path ? "opacity-100" : "opacity-30"}`}
+                                />
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <Link
+                          to={item.path}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={`group flex items-center justify-between p-5 rounded-3xl transition-all ${
+                            location.pathname === item.path
+                              ? "bg-red-600 text-white"
+                              : "bg-gray-50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300"
+                          }`}
+                        >
+                          <span className="text-xl font-bold">{item.name}</span>
+                          <ChevronRight
+                            className={`transition-transform group-hover:translate-x-1 ${location.pathname === item.path ? "opacity-100" : "opacity-30"}`}
+                          />
+                        </Link>
+                      )}
                     </motion.div>
                   ))}
                 </div>
@@ -205,24 +332,21 @@ export const Header: React.FC = () => {
               <div className="relative grid grid-cols-2 gap-3 mt-8">
                 <button
                   onClick={toggleLanguage}
-                  className="p-5 bg-gray-100 dark:bg-gray-800 rounded-3xl flex items-center justify-center gap-2 font-black uppercase"
+                  className="btn-muted py-5 uppercase"
                 >
                   <Globe size={18} className="text-red-600" /> {language}
                 </button>
-                <button
-                  onClick={toggleTheme}
-                  className="p-5 bg-gray-100 dark:bg-gray-800 rounded-3xl flex items-center justify-center"
-                >
-                  {theme === 'light' ? <Moon /> : <Sun />}
+                <button onClick={toggleTheme} className="btn-muted py-5">
+                  {theme === "light" ? <Moon /> : <Sun />}
                 </button>
                 <a
                   href="https://t.me/xuma701"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="col-span-2 p-5 bg-gray-900 dark:bg-red-600 text-white rounded-3xl font-black text-center shadow-lg shadow-gray-500/20 dark:shadow-red-700/30"
+                  className="btn-primary btn-full col-span-2 py-5 text-center"
                 >
-                  {language === 'uz' ? 'KIRISH' : 'SIGN IN'}
+                  {language === "uz" ? "KIRISH" : "SIGN IN"}
                 </a>
               </div>
             </motion.div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import {
@@ -6,15 +6,12 @@ import {
   Star,
   Users,
   Award,
-  Loader,
   MessageCircle,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../hooks/useLanguage'
 import { Reveal } from '../components/animation/Reveal'
 import { StaggerText } from '../components/animation/StaggerText'
-import { cardMotion } from '../components/animation/cardMotion'
-import { fetchTeachers } from '../services/api'
 
 interface Teacher {
   id: number
@@ -29,34 +26,52 @@ interface Teacher {
   bio: string
 }
 
+const mockTeachers: Teacher[] = [
+  {
+    id: 1,
+    initials: 'MK',
+    name: 'Madina Karimova',
+    role: 'IELTS Instructor',
+    rating: '4.9',
+    experience: '7 yil',
+    avatar:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
+    specializations: ['IELTS Writing', 'Academic English', 'Grammar'],
+    students: 540,
+    bio: "IELTS writing va speaking bo'yicha 7 yillik tajribaga ega ustoz.",
+  },
+  {
+    id: 2,
+    initials: 'AS',
+    name: 'Azizbek Saidov',
+    role: 'Speaking Coach',
+    rating: '4.8',
+    experience: '5 yil',
+    avatar:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80',
+    specializations: ['Speaking', 'Pronunciation', 'General English'],
+    students: 390,
+    bio: "Talabalarga confidence va fluency bilan gapirishni o'rgatadi.",
+  },
+  {
+    id: 3,
+    initials: 'NT',
+    name: 'Nigora Tursunova',
+    role: 'Reading & Listening Mentor',
+    rating: '4.7',
+    experience: '6 yil',
+    avatar:
+      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80',
+    specializations: ['Listening', 'Reading', 'Exam Strategy'],
+    students: 460,
+    bio: 'IELTS reading va listening strategiyalarini sodda va amaliy tushuntiradi.',
+  },
+]
+
 export const TeachersPage: React.FC = () => {
   const telegramUrl = 'https://t.me/xuma701'
   const { language } = useLanguage()
-  const [teachers, setTeachers] = useState<Teacher[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const loadTeachers = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const result = await fetchTeachers()
-        if (result.success) {
-          setTeachers(result.data)
-        } else {
-          setError(result.error || 'Failed to load teachers')
-        }
-      } catch (err) {
-        setError('Error loading teachers')
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadTeachers()
-  }, [])
+  const [teachers] = useState<Teacher[]>(mockTeachers)
 
   const content =
     language === 'uz'
@@ -145,27 +160,8 @@ export const TeachersPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Loading State */}
-          {loading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader className="w-8 h-8 text-red-600 animate-spin mr-3" />
-              <span className="text-lg font-semibold text-gray-600 dark:text-gray-400">
-                {content.loading}
-              </span>
-            </div>
-          )}
-
-          {/* Error State */}
-          {error && !loading && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center">
-              <p className="text-red-600 dark:text-red-400 text-lg font-semibold">
-                {content.error}: {error}
-              </p>
-            </div>
-          )}
-
           {/* Teachers Grid */}
-          {!loading && teachers.length > 0 && (
+          {teachers.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teachers.map((teacher, index) => (
                 <motion.div
@@ -174,12 +170,7 @@ export const TeachersPage: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={
-                    index % 2 === 0
-                      ? cardMotion.softLift.hover
-                      : cardMotion.tiltRight.hover
-                  }
-                  className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
+                  className="bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden shadow-[0_18px_45px_rgba(15,23,42,0.14)] hover:-translate-y-1.5 hover:border-red-200 hover:shadow-[0_26px_70px_rgba(185,28,28,0.22)] dark:shadow-black/45 dark:hover:border-red-900/60 dark:hover:shadow-red-950/35 transition-all duration-200"
                 >
                   {/* Header with Avatar */}
                   <div className="relative p-8 pb-0">
@@ -198,7 +189,7 @@ export const TeachersPage: React.FC = () => {
                       </div>
 
                       <div className="flex-1">
-                        <h3 className="text-xl font-black mb-1 group-hover:text-red-600 transition-colors">
+                        <h3 className="text-xl font-black mb-1">
                           {teacher.name}
                         </h3>
                         <p className="text-red-600 dark:text-red-400 font-bold text-sm mb-2">
@@ -212,7 +203,7 @@ export const TeachersPage: React.FC = () => {
                               <Star
                                 key={i}
                                 className={`w-4 h-4 ${
-                                  i < Math.floor(teacher.rating)
+                                  i < Math.floor(Number(teacher.rating))
                                     ? 'fill-current'
                                     : ''
                                 }`}
@@ -229,7 +220,7 @@ export const TeachersPage: React.FC = () => {
 
                   {/* Content */}
                   <div className="p-8 pt-6 relative">
-                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
@@ -278,7 +269,7 @@ export const TeachersPage: React.FC = () => {
                       href={telegramUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-colors"
+                      className="btn-primary btn-full py-4"
                     >
                       <MessageCircle className="w-5 h-5" />
                       {content.contactBtn}

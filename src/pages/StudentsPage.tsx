@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import {
   GraduationCap,
   TrendingUp,
   Award,
-  Loader,
   MessageCircle,
   CheckCircle,
 } from 'lucide-react'
@@ -13,8 +12,6 @@ import { motion } from 'framer-motion'
 import { useLanguage } from '../hooks/useLanguage'
 import { Reveal } from '../components/animation/Reveal'
 import { StaggerText } from '../components/animation/StaggerText'
-import { cardMotion } from '../components/animation/cardMotion'
-import { fetchStudents } from '../services/api'
 
 interface Student {
   id: number
@@ -31,34 +28,61 @@ interface Student {
   achievements: string[]
 }
 
+const mockStudents: Student[] = [
+  {
+    id: 1,
+    name: 'Alisher Karimov',
+    initials: 'AK',
+    course: 'IELTS Intensive',
+    score: 8.5,
+    module: 'Academic',
+    avatar:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80',
+    enrolledDate: '2025-01-12',
+    status: 'completed',
+    progress: 100,
+    testimonial:
+      "3 oy ichida writing va speaking ancha o'sdi. Natijam kutganimdan yuqori bo'ldi.",
+    achievements: ['IELTS 8.5', 'Writing 7.5', 'Speaking 8.0'],
+  },
+  {
+    id: 2,
+    name: 'Nilufar Rahimova',
+    initials: 'NR',
+    course: 'General English',
+    score: 7.5,
+    module: 'General',
+    avatar:
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80',
+    enrolledDate: '2025-02-04',
+    status: 'completed',
+    progress: 100,
+    testimonial:
+      "Darslar juda tartibli. Har hafta real progress sezildi.",
+    achievements: ['IELTS 7.5', 'Grammar boost', 'Fluency'],
+  },
+  {
+    id: 3,
+    name: 'Jasur Saidov',
+    initials: 'JS',
+    course: 'Speaking Club',
+    score: 8,
+    module: 'Speaking',
+    avatar:
+      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80',
+    enrolledDate: '2025-03-18',
+    status: 'in-progress',
+    progress: 82,
+    testimonial:
+      "Speaking club menga bemalol gapirishga yordam berdi.",
+    achievements: ['Speaking 8.0', 'Debate winner', 'Confidence'],
+  },
+]
+
 export const StudentsPage: React.FC = () => {
   const telegramUrl = 'https://t.me/xuma701'
   const { language } = useLanguage()
-  const [students, setStudents] = useState<Student[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const loadStudents = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const result = await fetchStudents()
-        if (result.success) {
-          setStudents(result.data)
-        } else {
-          setError(result.error || 'Failed to load students')
-        }
-      } catch (err) {
-        setError('Error loading students')
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadStudents()
-  }, [])
+  const [students] = useState<Student[]>(mockStudents)
 
   const content =
     language === 'uz'
@@ -165,27 +189,8 @@ export const StudentsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Loading State */}
-          {loading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader className="w-8 h-8 text-red-600 animate-spin mr-3" />
-              <span className="text-lg font-semibold text-gray-600 dark:text-gray-400">
-                {content.loading}
-              </span>
-            </div>
-          )}
-
-          {/* Error State */}
-          {error && !loading && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-8 text-center">
-              <p className="text-red-600 dark:text-red-400 text-lg font-semibold">
-                {content.error}: {error}
-              </p>
-            </div>
-          )}
-
           {/* Students Grid */}
-          {!loading && students.length > 0 && (
+          {students.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {students.map((student, index) => (
                 <motion.div
@@ -194,12 +199,7 @@ export const StudentsPage: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={
-                    index % 2 === 0
-                      ? cardMotion.softLift.hover
-                      : cardMotion.tiltRight.hover
-                  }
-                  className="group bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:shadow-red-500/10 transition-all duration-500"
+                  className="bg-white dark:bg-gray-900 rounded-[2.5rem] border border-gray-200 dark:border-gray-800 overflow-hidden shadow-[0_18px_45px_rgba(15,23,42,0.14)] hover:-translate-y-1.5 hover:border-red-200 hover:shadow-[0_26px_70px_rgba(185,28,28,0.22)] dark:shadow-black/45 dark:hover:border-red-900/60 dark:hover:shadow-red-950/35 transition-all duration-200"
                 >
                   {/* Header with Avatar and Score */}
                   <div className="relative p-8 pb-0">
@@ -218,7 +218,7 @@ export const StudentsPage: React.FC = () => {
                       </div>
 
                       <div className="flex-1">
-                        <h3 className="text-xl font-black mb-1 group-hover:text-red-600 transition-colors">
+                        <h3 className="text-xl font-black mb-1">
                           {student.name}
                         </h3>
                         <p className="text-red-600 dark:text-red-400 font-bold text-sm mb-2">
@@ -235,7 +235,7 @@ export const StudentsPage: React.FC = () => {
 
                   {/* Content */}
                   <div className="p-8 pt-6 relative">
-                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
@@ -297,7 +297,7 @@ export const StudentsPage: React.FC = () => {
                       href={telegramUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-colors"
+                      className="btn-primary btn-full py-4"
                     >
                       <MessageCircle className="w-5 h-5" />
                       {content.contactBtn}
