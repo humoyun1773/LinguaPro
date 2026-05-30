@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
           { name: "Bosh sahifa", path: "/" },
           { name: "Biz haqimizda", path: "/about" },
           {
-            name: "Specialist",
+            name: "Mutaxasislar",
             children: [
               { name: "Ustozlar", path: "/teachers" },
               { name: "O'quvchilar", path: "/students" },
@@ -45,7 +45,6 @@ export const Header: React.FC = () => {
       : [
           { name: "Home", path: "/" },
           { name: "About Us", path: "/about" },
-          { name: "Courses", path: "/courses" },
           {
             name: "Specialist",
             children: [
@@ -53,6 +52,7 @@ export const Header: React.FC = () => {
               { name: "Students", path: "/students" },
             ],
           },
+          { name: "Courses", path: "/courses" },
         ]
 
   return (
