@@ -9,6 +9,7 @@ import {
   ChevronRight,
   LayoutGrid,
 } from 'lucide-react'
+import logo from '../assets/ChatGPT Image 22 апр. 2026 г., 19_50_27.png'
 import { useTheme } from '../hooks/useTheme'
 import { useLanguage } from '../hooks/useLanguage'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -74,7 +75,7 @@ export const Header: React.FC = () => {
           <Link to="/" className="flex items-center group relative">
             <div className="w-14 h-14 rounded-2xl overflow-hidden relative z-10">
               <img
-                src="/src/assets/ChatGPT Image 22 апр. 2026 г., 19_50_27.png"
+                src={logo}
                 alt="LinguaPro Logo"
                 className="w-full h-full object-cover"
               />
