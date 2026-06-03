@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import aboutImage from "../assets/imgs.webp"
+import enterImage from "../assets/enter.webp"
 import { motion } from "framer-motion"
 import { useLanguage } from "../hooks/useLanguage"
 
@@ -169,7 +170,6 @@ export const AboutPage: React.FC = () => {
               <p className="text-xl text-gray-600 dark:text-gray-400 max-w-lg">
                 {content.heroDesc}
               </p>
-
             </motion.div>
 
             <motion.div
@@ -231,7 +231,7 @@ export const AboutPage: React.FC = () => {
       <section className="py-24 px-6 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
+            <div className="flex flex-col justify-center">
               <h2 className="text-5xl font-black tracking-tight mb-8 text-gray-900 dark:text-white">
                 {content.storyTitle}
               </h2>
@@ -244,23 +244,17 @@ export const AboutPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative rounded-[3rem] overflow-hidden border border-gray-200 dark:border-gray-800 shadow-2xl shadow-gray-900/10 dark:shadow-black/30"
+              className="relative rounded-[4.5rem] overflow-hidden border border-gray-200 dark:border-gray-800 shadow-2xl shadow-gray-900/10 dark:shadow-black/30 w-full h-[450px]"
             >
-              <div className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 aspect-video flex items-center justify-center">
-                <PenTool className="w-24 h-24 text-red-500/40 dark:text-red-400/40" />
-              </div>
-              <div className="absolute bottom-8 left-8 bg-white dark:bg-gray-950 px-8 py-5 rounded-2xl shadow-xl shadow-gray-900/10 dark:shadow-black/30 border border-gray-100 dark:border-gray-800">
-                <Calendar className="w-6 h-6 text-red-600 dark:text-red-400 mb-2" />
-                <p className="font-bold text-lg text-gray-900 dark:text-white">
-                  {content.founded}
-                </p>
-              </div>
+              <img
+                src={enterImage}
+                alt="LinguaPro Story"
+                className="w-full h-full object-cover block"
+              />
             </motion.div>
           </div>
         </div>
       </section>
-
-      {/* Principles */}
       <section className="py-24 px-6 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -291,7 +285,7 @@ export const AboutPage: React.FC = () => {
                 </p>
               </motion.div>
             ))}
-          </div>
+          </div>  
         </div>
       </section>
 
