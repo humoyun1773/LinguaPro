@@ -11,6 +11,7 @@ import {
   Calendar,
   Sparkles,
 } from "lucide-react"
+import aboutImage from "../assets/imgs.webp"
 import { motion } from "framer-motion"
 import { useLanguage } from "../hooks/useLanguage"
 
@@ -169,21 +170,6 @@ export const AboutPage: React.FC = () => {
                 {content.heroDesc}
               </p>
 
-              <div className="flex items-center gap-8 pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-red-600 dark:text-red-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {content.globalReachLabel}
-                    </p>
-                    <p className="text-3xl font-black text-red-600">
-                      {content.globalReachValue}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </motion.div>
 
             <motion.div
@@ -192,15 +178,12 @@ export const AboutPage: React.FC = () => {
               transition={{ duration: 1.1 }}
               className="relative hidden lg:block"
             >
-              <div className="bg-white/90 dark:bg-gray-900/90 rounded-[3rem] p-8 shadow-2xl shadow-gray-900/10 dark:shadow-black/30 border border-gray-100 dark:border-gray-800">
-                <div className="aspect-square bg-gradient-to-br from-red-500 to-red-700 rounded-[2.5rem] flex items-center justify-center">
-                  <Globe className="w-40 h-40 text-white/90" />
-                </div>
-              </div>
-              <div className="absolute -bottom-6 -right-6 bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-xl shadow-gray-900/10 dark:shadow-black/30 border border-gray-100 dark:border-gray-800">
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  {content.founded}
-                </p>
+              <div className="overflow-hidden rounded-[4rem] border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-900/10 dark:shadow-black/30 bg-white dark:bg-gray-900 h-[500px]">
+                <img
+                  src={aboutImage}
+                  alt="LinguaPro About"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </motion.div>
           </div>
