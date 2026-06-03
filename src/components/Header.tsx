@@ -213,8 +213,6 @@ export const Header: React.FC = () => {
             {/* Profile CTA */}
             <a
               href="http://51.20.249.164/sign-in"
-              target="_blank"
-              rel="noopener noreferrer"
               className="btn-primary h-12 w-12 p-0 md:w-auto md:px-5"
             >
               <User size={18} />
@@ -342,8 +340,6 @@ export const Header: React.FC = () => {
                 </button>
                 <a
                   href="http://51.20.249.164/sign-in"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="btn-primary btn-full col-span-2 py-5 text-center"
                 >
