@@ -212,7 +212,7 @@ export const Header: React.FC = () => {
 
             {/* Profile CTA */}
             <a
-              href="https://t.me/xuma701"
+              href="http://51.20.249.164/sign-in"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary h-12 w-12 p-0 md:w-auto md:px-5"
@@ -341,7 +341,7 @@ export const Header: React.FC = () => {
                   {theme === 'light' ? <Moon /> : <Sun />}
                 </button>
                 <a
-                  href="https://t.me/xuma701"
+                  href="http://51.20.249.164/sign-in"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}

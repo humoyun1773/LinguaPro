@@ -14,7 +14,7 @@ import { Reveal } from "../components/animation/Reveal"
 import { StaggerText } from "../components/animation/StaggerText"
 
 export const EventsPage: React.FC = () => {
-  const telegramUrl = "https://t.me/xuma701"
+  const telegramUrl = "https://t.me/TalipovShoh"
 
   const events = [
     {

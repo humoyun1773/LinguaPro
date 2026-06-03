@@ -31,7 +31,7 @@ interface TeacherSummary {
 }
 
 export const HomePage: React.FC = () => {
-  const telegramUrl = "https://t.me/xuma701"
+  const telegramUrl = "https://t.me/TalipovShoh"
   const { language } = useLanguage()
   const [teachers, setTeachers] = useState<TeacherSummary[]>([])
 

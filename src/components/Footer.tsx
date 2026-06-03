@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
                 <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </a>
               <a
-                href="https://t.me/xuma701"
+                href="https://t.me/TalipovShoh"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"

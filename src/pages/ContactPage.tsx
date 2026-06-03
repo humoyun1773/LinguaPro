@@ -37,7 +37,7 @@ export const ContactPage: React.FC = () => {
     address: "Qarshi shahar, O'zbekiston",
     workingHours: "Dushanba - Shanba: 09:00 - 19:00",
     workingHoursEn: "Monday - Saturday: 09:00 - 19:00",
-    telegram: "@xuma701",
+    telegram: "@TalipovShoh",
     location: { lat: 38.8606, lng: 65.7894 }, // Qarshi coordinates
   }
 
@@ -261,7 +261,7 @@ export const ContactPage: React.FC = () => {
               </motion.a>
 
               <motion.a
-                href={`https://t.me/xuma701`}
+                href="https://t.me/TalipovShoh"
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, x: -20 }}

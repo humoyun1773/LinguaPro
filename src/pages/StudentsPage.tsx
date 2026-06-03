@@ -80,7 +80,7 @@ const mockStudents: Student[] = [
 ]
 
 export const StudentsPage: React.FC = () => {
-  const telegramUrl = 'https://t.me/xuma701'
+  const telegramUrl = 'https://t.me/TalipovShoh'
   const { language } = useLanguage()
   const [students] = useState<Student[]>(mockStudents)
 
