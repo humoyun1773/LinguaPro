@@ -212,7 +212,7 @@ export const Header: React.FC = () => {
 
             {/* Profile CTA */}
             <a
-              href="http://51.20.249.164/sign-in"
+              href="http://linguaproo.servequake.com/sign-in"
               className="btn-primary h-12 w-12 p-0 md:w-auto md:px-5"
             >
               <User size={18} />
@@ -339,7 +339,7 @@ export const Header: React.FC = () => {
                   {theme === 'light' ? <Moon /> : <Sun />}
                 </button>
                 <a
-                  href="http://51.20.249.164/sign-in"
+                  href="http://linguaproo.servequake.com/sign-in"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="btn-primary btn-full col-span-2 py-5 text-center"
                 >
