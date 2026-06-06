@@ -20,14 +20,7 @@ export const Header: React.FC = () => {
   const { language, toggleLanguage } = useLanguage()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSpecialistOpen, setIsSpecialistOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const navItems =
     language === 'uz'
@@ -57,296 +50,183 @@ export const Header: React.FC = () => {
         ]
 
   return (
-    <header className="fixed w-full top-0 z-[100] transition-all duration-500">
-      {/* Background Layer with Masking */}
-      <div
-        className={`absolute inset-0 transition-all duration-500 ${
-          scrolled
-            ? 'bg-white/80 dark:bg-gray-950/80 backdrop-blur-2xl shadow-2xl border-b border-gray-200/50 dark:border-gray-800/50 h-[70px]'
-            : 'bg-transparent h-[100px]'
-        }`}
-      />
+    <header className="fixed top-0 left-0 right-0 z-[100] h-[80px] w-full bg-white/90 dark:bg-gray-950/95 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
+        {/* --- Logo Section --- */}
+        <Link to="/" className="flex items-center shrink-0">
+          <div className="w-12 h-12 rounded-xl overflow-hidden bg-red-600 shadow-lg shadow-red-600/20">
+            <img
+              src={logo}
+              alt="Logo"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="ml-3">
+            <span className="text-xl font-black tracking-tighter text-gray-900 dark:text-white leading-none">
+              Lingua<span className="text-red-700">Pro</span>
+            </span>
+          </div>
+        </Link>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-        <div
-          className={`flex justify-between items-center transition-all duration-500 ${scrolled ? 'h-[70px]' : 'h-[100px]'}`}
-        >
-          {/* --- Logo Section (As requested: Image stays same) --- */}
-          <Link to="/" className="flex items-center group relative">
-            <div className="w-14 h-14 rounded-2xl overflow-hidden relative z-10">
-              <img
-                src={logo}
-                alt="LinguaPro Logo"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white leading-none group-hover:text-red-600 transition-colors">
-                Lingua<span className="text-red-700">Pro</span>
-              </span>
-              <div className="h-[2px] w-0 group-hover:w-full bg-red-600 transition-all duration-300" />
-            </div>
-          </Link>
-
-          {/* --- Minimalist Center Nav --- */}
-          <nav className="hidden md:flex items-center space-x-2 bg-gray-100/50 dark:bg-white/5 p-1.5 rounded-2xl border border-gray-200/20 dark:border-white/5">
-            {navItems.map((item) =>
-              item.children ? (
-                <div key={item.name} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setIsSpecialistOpen((open) => !open)}
-                    className={`relative flex items-center gap-1 px-5 py-2 text-sm font-bold rounded-xl transition-colors duration-150 ${
-                      item.children.some(
-                        (child) => location.pathname === child.path
-                      )
-                        ? 'text-white'
-                        : isSpecialistOpen
-                          ? 'bg-white text-red-600 shadow-sm dark:bg-gray-900'
-                          : 'text-gray-600 dark:text-gray-400 hover:text-red-600'
-                    }`}
-                  >
-                    <span className="relative z-10">{item.name}</span>
-                    <ChevronDown
-                      className={`relative z-10 h-4 w-4 transition-transform ${
-                        isSpecialistOpen ? 'rotate-180' : ''
-                      }`}
-                    />
-                    {item.children.some(
-                      (child) => location.pathname === child.path
-                    ) && (
-                      <motion.div
-                        layoutId="pill"
-                        className="absolute inset-0 bg-red-700 rounded-xl shadow-[0_4px_12px_rgba(185,28,28,0.3)]"
-                        transition={{
-                          type: 'spring',
-                          stiffness: 380,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                  </button>
-
-                  <AnimatePresence>
-                    {isSpecialistOpen && (
-                      <>
-                        <button
-                          type="button"
-                          aria-label="Close specialist menu"
-                          className="fixed inset-0 z-20 cursor-default"
-                          onClick={() => setIsSpecialistOpen(false)}
-                        />
-                        <motion.div
-                          initial={{ y: -4, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={{ y: -4, opacity: 0 }}
-                          transition={{ duration: 0.12 }}
-                          className="absolute left-1/2 top-full z-30 mt-2 w-44 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-1.5 shadow-xl shadow-gray-900/10 dark:border-gray-800 dark:bg-gray-900"
-                        >
-                          <div className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900" />
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.path}
-                              to={child.path}
-                              onClick={() => setIsSpecialistOpen(false)}
-                              className={`relative flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors ${
-                                location.pathname === child.path
-                                  ? 'bg-red-600 text-white'
-                                  : 'text-gray-700 hover:bg-gray-100 hover:text-red-600 dark:text-gray-300 dark:hover:bg-gray-800'
-                              }`}
-                            >
-                              <span>{child.name}</span>
-                              <ChevronRight size={16} className="opacity-45" />
-                            </Link>
-                          ))}
-                        </motion.div>
-                      </>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ) : (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`relative px-5 py-2 text-sm font-bold rounded-xl transition-all duration-300 ${
-                    location.pathname === item.path
-                      ? 'text-white'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-red-600'
+        {/* --- Center Nav --- */}
+        <nav className="hidden md:flex items-center space-x-1 bg-gray-100/50 dark:bg-white/5 p-1 rounded-2xl border border-gray-200/10 dark:border-white/5">
+          {navItems.map((item) =>
+            item.children ? (
+              <div key={item.name} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsSpecialistOpen(!isSpecialistOpen)}
+                  className={`flex items-center gap-1 px-4 py-2 text-sm font-bold rounded-xl transition-colors ${
+                    item.children.some((child) => location.pathname === child.path)
+                      ? "bg-red-600 text-white shadow-md shadow-red-600/20"
+                      : "text-gray-600 dark:text-gray-400 hover:text-red-600"
                   }`}
                 >
-                  <span className="relative z-10">{item.name}</span>
-                  {location.pathname === item.path && (
-                    <motion.div
-                      layoutId="pill"
-                      className="absolute inset-0 bg-red-700 rounded-xl shadow-[0_4px_12px_rgba(185,28,28,0.3)]"
-                      transition={{
-                        type: 'spring',
-                        stiffness: 380,
-                        damping: 30,
-                      }}
-                    />
+                  {item.name}
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isSpecialistOpen ? "rotate-180" : ""}`} />
+                </button>
+
+                <AnimatePresence>
+                  {isSpecialistOpen && (
+                    <>
+                      <button
+                        type="button"
+                        className="fixed inset-0 z-20 cursor-default"
+                        onClick={() => setIsSpecialistOpen(false)}
+                      />
+                      <motion.div
+                        initial={{ y: -4, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -4, opacity: 0 }}
+                        className="absolute left-1/2 top-full z-30 mt-2 w-44 -translate-x-1/2 rounded-2xl border border-gray-200 bg-white p-1.5 shadow-xl dark:border-gray-800 dark:bg-gray-900"
+                      >
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            onClick={() => setIsSpecialistOpen(false)}
+                            className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors ${
+                              location.pathname === child.path
+                                ? "bg-red-600 text-white"
+                                : "text-gray-700 hover:bg-gray-100 hover:text-red-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                            }`}
+                          >
+                            <span>{child.name}</span>
+                            <ChevronRight size={16} className="opacity-45" />
+                          </Link>
+                        ))}
+                      </motion.div>
+                    </>
                   )}
-                </Link>
-              )
-            )}
-          </nav>
-
-          {/* --- System Controls --- */}
-          <div className="flex items-center gap-2">
-            {/* Lang & Theme Duo */}
-            <div className="hidden sm:flex items-center gap-1 bg-white dark:bg-gray-900 p-1 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
-              <button
-                onClick={toggleLanguage}
-                className="btn-icon h-9 w-9 rounded-lg shadow-none"
-                title="Language"
+                </AnimatePresence>
+              </div>
+            ) : (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 text-sm font-bold rounded-xl transition-colors ${
+                  location.pathname === item.path
+                    ? "bg-red-600 text-white shadow-md shadow-red-600/20"
+                    : "text-gray-600 dark:text-gray-400 hover:text-red-600"
+                }`}
               >
-                <Globe className="w-4 h-4 text-red-600" />
-              </button>
-              <button
-                onClick={toggleTheme}
-                className="btn-icon h-9 w-9 rounded-lg shadow-none"
-              >
-                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-              </button>
-            </div>
+                {item.name}
+              </Link>
+            )
+          )}
+        </nav>
 
-            {/* Profile CTA */}
-            <a
-              href="http://linguaproo.servequake.com/sign-in"
-              className="btn-primary h-12 w-12 p-0 md:w-auto md:px-5"
-            >
-              <User size={18} />
-              <span className="hidden md:inline ml-2">
-                {language === 'uz' ? 'Kirish' : 'Sign In'}
-              </span>
-            </a>
-
-            {/* Mobile Menu Button */}
+        {/* --- System Controls --- */}
+        <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-1 bg-white dark:bg-gray-900 p-1 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="btn-muted h-12 w-12 p-0 md:hidden"
+              onClick={toggleLanguage}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <LayoutGrid size={24} />}
+              <Globe className="w-4 h-4 text-red-600" />
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
             </button>
           </div>
+
+          <a
+            href="http://linguaproo.servequake.com/sign-in"
+            className="btn-primary h-11 px-5"
+          >
+            <User size={18} />
+            <span className="hidden md:inline ml-2">{language === "uz" ? "Kirish" : "Sign In"}</span>
+          </a>
+
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="btn-muted h-11 w-11 p-0 md:hidden flex items-center justify-center"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <LayoutGrid size={24} />}
+          </button>
         </div>
       </div>
 
-      {/* --- Mobile Full-Screen Menu --- */}
+      {/* --- Mobile Menu --- */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-[110] p-4 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl md:hidden"
           >
-            <div
-              className="absolute inset-0 bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-
-            <motion.div className="relative w-full h-full bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-gray-800 p-8 flex flex-col justify-between overflow-hidden">
-              {/* Background Decoration */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/5 rounded-full blur-3xl -mr-32 -mt-32" />
-
-              <div className="relative">
-                <div className="flex justify-between items-center mb-12">
-                  <span className="text-xl font-black italic tracking-tighter">
-                    LINGUAPRO
-                  </span>
-                  <button
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="btn-muted p-3"
-                  >
-                    <X />
-                  </button>
-                </div>
-
-                <div className="space-y-4">
-                  {navItems.map((item, i) => (
-                    <motion.div
-                      key={item.path || item.name}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: i * 0.04 }}
-                    >
-                      {item.children ? (
-                        <div
-                          className={`rounded-3xl border p-2 ${
-                            item.children.some(
-                              (child) => location.pathname === child.path
-                            )
-                              ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300'
-                              : 'border-gray-100 bg-gray-50 text-gray-700 dark:border-gray-800 dark:bg-gray-800/50 dark:text-gray-300'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between px-3 py-2">
-                            <span className="text-xl font-bold">
-                              {item.name}
-                            </span>
-                            <ChevronDown size={20} className="opacity-60" />
-                          </div>
-                          <div className="grid gap-1.5">
-                            {item.children.map((child) => (
-                              <Link
-                                key={child.path}
-                                to={child.path}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className={`flex items-center justify-between rounded-2xl px-4 py-3 font-semibold transition-colors ${
-                                  location.pathname === child.path
-                                    ? 'bg-red-600 text-white'
-                                    : 'bg-white/70 text-gray-700 hover:bg-white dark:bg-gray-900/50 dark:text-gray-300 dark:hover:bg-gray-900'
-                                }`}
-                              >
-                                <span>{child.name}</span>
-                                <ChevronRight
-                                  className={`transition-transform ${location.pathname === child.path ? 'opacity-100' : 'opacity-30'}`}
-                                />
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <Link
-                          to={item.path}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={`group flex items-center justify-between p-5 rounded-3xl transition-all ${
-                            location.pathname === item.path
-                              ? 'bg-red-600 text-white'
-                              : 'bg-gray-50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300'
-                          }`}
-                        >
-                          <span className="text-xl font-bold">{item.name}</span>
-                          <ChevronRight
-                            className={`transition-transform group-hover:translate-x-1 ${location.pathname === item.path ? 'opacity-100' : 'opacity-30'}`}
-                          />
-                        </Link>
-                      )}
-                    </motion.div>
-                  ))}
-                </div>
+            <div className="p-6 h-full flex flex-col">
+              <div className="flex justify-between items-center mb-8">
+                <span className="text-xl font-black tracking-tighter">LINGUAPRO</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="btn-muted p-3">
+                  <X />
+                </button>
               </div>
-
-              <div className="relative grid grid-cols-2 gap-3 mt-8">
-                <button
-                  onClick={toggleLanguage}
-                  className="btn-muted py-5 uppercase"
-                >
-                  <Globe size={18} className="text-red-600" /> {language}
+              <div className="space-y-3 flex-1 overflow-y-auto">
+                {navItems.map((item) => (
+                  <div key={item.name}>
+                    {item.children ? (
+                      <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-3xl space-y-2">
+                        <div className="font-bold text-gray-400 text-xs uppercase tracking-widest mb-2 px-2">{item.name}</div>
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-2xl font-bold"
+                          >
+                            {child.name} <ChevronRight size={18} className="opacity-30" />
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      <Link
+                        to={item.path}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between p-5 rounded-3xl font-bold ${
+                          location.pathname === item.path ? "bg-red-600 text-white" : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                        }`}
+                      >
+                        {item.name} <ChevronRight size={18} className="opacity-30" />
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-3 mt-8">
+                <button onClick={toggleLanguage} className="btn-muted py-4 font-bold uppercase">{language}</button>
+                <button onClick={toggleTheme} className="btn-muted py-4 flex items-center justify-center">
+                  {theme === "light" ? <Moon /> : <Sun />}
                 </button>
-                <button onClick={toggleTheme} className="btn-muted py-5">
-                  {theme === 'light' ? <Moon /> : <Sun />}
-                </button>
-                <a
-                  href="http://linguaproo.servequake.com/sign-in"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="btn-primary btn-full col-span-2 py-5 text-center"
-                >
-                  {language === 'uz' ? 'KIRISH' : 'SIGN IN'}
+                <a href="http://linguaproo.servequake.com/sign-in" className="btn-primary col-span-2 py-5 text-center font-bold">
+                  {language === "uz" ? "KIRISH" : "SIGN IN"}
                 </a>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -4,7 +4,8 @@ import { Footer } from "../components/Footer"
 import { motion } from "framer-motion"
 import { useLanguage } from "../hooks/useLanguage"
 import { StaggerText } from "../components/animation/StaggerText"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { Button } from "../components/common/Button"
 import {
   ArrowRight,
   Play,
@@ -30,7 +31,15 @@ interface TeacherSummary {
   rating: string | number
 }
 
+const fallbackTeachers: TeacherSummary[] = [
+  { id: 1, name: "Madina Karimova", role: "IELTS Instructor", experience: "7 yil", students: 540, rating: "4.9" },
+  { id: 2, name: "Azizbek Saidov", role: "Speaking Coach", experience: "5 yil", students: 390, rating: "4.8" },
+  { id: 3, name: "Nigora Tursunova", role: "Reading Mentor", experience: "6 yil", students: 460, rating: "4.7" },
+  { id: 4, name: "Jasur Saidov", role: "Writing Specialist", experience: "4 yil", students: 280, rating: "4.6" },
+];
+
 export const HomePage: React.FC = () => {
+  const navigate = useNavigate()
   const telegramUrl = "https://t.me/TalipovShoh"
   const { language } = useLanguage()
   const [teachers, setTeachers] = useState<TeacherSummary[]>([])
@@ -39,11 +48,14 @@ export const HomePage: React.FC = () => {
     const loadTeachers = async () => {
       try {
         const result = await fetchTeachers()
-        if (result.success) {
+        if (result.success && result.data.length > 0) {
           setTeachers(result.data.slice(0, 4))
+        } else {
+          setTeachers(fallbackTeachers)
         }
       } catch (err) {
         console.error("Error loading teachers:", err)
+        setTeachers(fallbackTeachers)
       }
     }
     loadTeachers()
@@ -81,7 +93,7 @@ export const HomePage: React.FC = () => {
           testimonialsTitle: "Haqiqiy Sharhlar",
           academic: "Academic",
           general: "General",
-          successful: "Muvaffaqiyatli",
+          successful: "Natija",
           experienceLabel: "Tajriba",
           studentsLabel: "O'quvchilar",
         }
@@ -113,7 +125,7 @@ export const HomePage: React.FC = () => {
           testimonialsTitle: "Real Testimonials",
           academic: "Academic",
           general: "General",
-          successful: "Successful",
+          successful: "Result",
           experienceLabel: "Experience",
           studentsLabel: "Students",
         }
@@ -223,7 +235,7 @@ export const HomePage: React.FC = () => {
               {content.heroTitle}
             </h1>
 
-            <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-lg mx-auto lg:mx-0">
+            <p className="text-base sm:text-xl text-gray-600 dark:text-gray-300 max-w-lg mx-auto lg:mx-0 leading-relaxed">
               {content.heroDesc}
             </p>
 
@@ -246,14 +258,8 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8 pt-2 sm:pt-4 text-center sm:text-left">
-              <div className="flex items-center gap-1 text-yellow-500 text-base sm:text-lg">
-                ★★★★☆{" "}
-                <span className="text-gray-600 dark:text-gray-400 ml-2 text-xs sm:text-sm font-medium">
-                  4.98
-                </span>
-              </div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">
-                12,450+ talaba biz bilan o'qimoqda
+              <div className="text-xl sm:text-2xl text-gray-900 dark:text-white font-black">
+                12,450+ <span className="text-gray-600 dark:text-gray-400 text-sm sm:text-base font-medium">talaba biz bilan o'qimoqda</span>
               </div>
             </div>
           </motion.div>
@@ -324,30 +330,30 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* Why Us */}
-      <section className="py-14 sm:py-20 px-4 bg-gray-50 dark:bg-gray-950">
+      <section className="py-20 sm:py-32 px-4 bg-gray-50 dark:bg-gray-950">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <div className="text-red-600 font-bold tracking-widest text-xs sm:text-sm">
+          <div className="text-center mb-16 sm:mb-24">
+            <div className="text-red-600 font-black tracking-[0.25em] uppercase text-[10px] sm:text-xs mb-4">
               {content.whyUsTag}
             </div>
             <StaggerText
               text={content.whyUsTitle}
-              className="text-2xl sm:text-4xl lg:text-5xl font-black mt-2 sm:mt-3"
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mt-2 leading-[1.1] tracking-tight"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {whyUs.map((item, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -8 }}
-                className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-gray-100 dark:border-gray-800 hover:border-red-500 transition-all"
+                whileHover={{ y: -10 }}
+                className="bg-white dark:bg-gray-900 p-8 sm:p-10 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:border-red-500/30 transition-all duration-300"
               >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
-                  <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-red-600" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-red-50 dark:bg-red-900/20 rounded-3xl flex items-center justify-center mb-8">
+                  <item.icon className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{item.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{item.desc}</p>
+                <h3 className="text-xl sm:text-2xl font-black mb-4 leading-tight">{item.title}</h3>
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -355,113 +361,134 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Teachers */}
-      <section className="py-14 sm:py-20 px-4 bg-white dark:bg-gray-900">
+      <section className="py-20 sm:py-28 px-4 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <div className="text-red-600 uppercase font-bold tracking-widest text-xs sm:text-sm">
+          <div className="text-center mb-16 sm:mb-20">
+            <div className="text-red-600 uppercase font-black tracking-[0.25em] text-[10px] sm:text-xs mb-4">
               {content.teamTag}
             </div>
             <StaggerText
               text={content.teamTitle}
-              className="text-2xl sm:text-4xl lg:text-5xl font-black mt-2 sm:mt-3"
+              className="text-4xl sm:text-5xl lg:text-7xl font-black mt-2 leading-[1.1] tracking-tight"
             />
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+            <p className="mt-6 text-xl sm:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
               {content.teamDesc}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {teachers.length > 0 ? (
               teachers.map((teacher, i) => (
                 <motion.div
                   key={i}
-                  whileHover={{ y: -12 }}
-                  className="group bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-800 transition-all"
+                  whileHover={{ y: -10 }}
+                  className="bg-white dark:bg-gray-900 rounded-[2rem] border border-gray-100 dark:border-gray-800 overflow-hidden shadow-[0_15px_40px_rgba(15,23,42,0.08)] hover:shadow-[0_25px_60px_rgba(185,28,28,0.15)] transition-all duration-300 flex flex-col"
                 >
-                  <div className="h-48 sm:h-64 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white text-5xl sm:text-7xl font-black">
-                    {teacher.name
-                      .split(" ")
-                      .map((n: string) => n[0])
-                      .join("")}
-                  </div>
-                  <div className="p-5 sm:p-7">
-                    <h3 className="font-bold text-xl sm:text-2xl">{teacher.name}</h3>
-                    <p className="text-sm sm:text-base text-red-600">{teacher.role}</p>
-                    <div className="mt-4 sm:mt-6 space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">
-                          {content.experienceLabel}:
-                        </span>
-                        <span className="font-semibold">
-                          {teacher.experience}
-                        </span>
+                  {/* Avatar Area - Match TeachersPage */}
+                  <div className="relative p-6 pb-0">
+                    <div className="flex items-start gap-4">
+                      <div className="relative shrink-0">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-600 to-red-800 rounded-2xl flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-lg">
+                          {teacher.name
+                            .split(" ")
+                            .map((n: string) => n[0])
+                            .join("")}
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">
-                          {content.studentsLabel}:
-                        </span>
-                        <span className="font-semibold">
-                          {teacher.students}+
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Reyting:</span>
-                        <span className="font-semibold text-yellow-500">
-                          ★★★★ {teacher.rating}
-                        </span>
+                      <div className="min-w-0 pt-1">
+                        <h3 className="font-black text-lg sm:text-xl mb-1">{teacher.name}</h3>
+                        <p className="text-xs sm:text-sm text-red-600 font-bold">{teacher.role}</p>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="p-6 pt-5 flex-1 flex flex-col">
+                    <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-red-500/10 to-transparent" />
+                    
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 gap-3 mb-5">
+                      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3 text-center">
+                        <Users className="w-5 h-5 text-red-600 mx-auto mb-1.5" />
+                        <p className="text-sm font-black dark:text-gray-100">{teacher.students}+</p>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-300 font-bold">{content.studentsLabel}</p>
+                      </div>
+                      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3 text-center">
+                        <Award className="w-5 h-5 text-red-600 mx-auto mb-1.5" />
+                        <p className="text-sm font-black dark:text-gray-100">{teacher.experience}</p>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-300 font-bold">{content.experienceLabel}</p>
+                      </div>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-300 leading-relaxed mb-6 line-clamp-2">
+                      IELTS va Speaking bo'yicha professional ustoz. 1000+ o'quvchilar muvaffaqiyatiga sababchi.
+                    </p>
+
+                    <Button
+                      fullWidth
+                      size="sm"
+                      variant="secondary"
+                      className="mt-auto !rounded-xl !py-2.5 text-xs dark:!bg-gray-800 dark:!border-gray-700 dark:!text-gray-100"
+                      onClick={() => window.open(telegramUrl, "_blank")}
+                    >
+                      Bog'lanish
+                    </Button>
                   </div>
                 </motion.div>
               ))
             ) : (
-              <p className="col-span-1 sm:col-span-2 lg:col-span-4 text-center py-12 text-gray-500 text-sm sm:text-base">
+              <div className="col-span-full text-center py-20 text-gray-400">
                 Ustozlar yuklanmoqda...
-              </p>
+              </div>
             )}
           </div>
 
-          <div className="text-center mt-10 sm:mt-12 px-4">
-            <Link to="/teachers" className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold">
-              {content.viewAllTeachers} <ArrowRight className="w-5 h-5" />
-            </Link>
+          <div className="text-center mt-12 sm:mt-16">
+            <Button
+              variant="outline"
+              size="md"
+              icon={ArrowRight}
+              onClick={() => navigate("/teachers")}
+              className="!text-gray-900 dark:!text-white border-gray-200 dark:border-gray-800 hover:!bg-gray-50 dark:hover:!bg-gray-800 px-10"
+            >
+              {content.viewAllTeachers}
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-14 sm:py-20 px-4 bg-gray-50 dark:bg-gray-950">
+      <section className="py-20 sm:py-28 px-4 bg-gray-50 dark:bg-gray-950">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <div className="text-red-600 font-bold tracking-widest text-xs sm:text-sm">
+          <div className="text-center mb-16 sm:mb-20">
+            <div className="text-red-600 font-black tracking-[0.25em] uppercase text-[10px] sm:text-xs mb-4">
               {content.testimonialsTag}
             </div>
             <StaggerText
               text={content.testimonialsTitle}
-              className="text-2xl sm:text-4xl lg:text-5xl font-black mt-2 sm:mt-3"
+              className="text-4xl sm:text-5xl lg:text-7xl font-black mt-2 leading-[1.1] tracking-tight"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -8 }}
-                className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all h-full flex flex-col"
+                whileHover={{ y: -10 }}
+                className="bg-white dark:bg-gray-900 p-8 sm:p-10 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col"
               >
-                <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-red-500 mb-4 sm:mb-6" />
-                <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic mb-6 sm:mb-8 flex-1 leading-relaxed">
+                <Quote className="w-10 h-10 text-red-500/10 mb-6" />
+                <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 italic mb-8 flex-1 leading-relaxed font-medium">
                   "{testimonial.text}"
                 </p>
-                <div className="flex items-center gap-3 sm:gap-4 mt-auto">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center font-bold text-white text-lg sm:text-xl shadow-inner">
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className="w-12 h-12 shrink-0 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center font-black text-white text-lg shadow-lg">
                     {testimonial.image}
                   </div>
                   <div>
-                    <div className="font-semibold text-base sm:text-lg">
+                    <div className="font-black text-lg leading-none mb-1 dark:text-gray-100">
                       {testimonial.name}
                     </div>
-                    <div className="text-xs sm:text-sm text-green-600 font-medium">
+                    <div className="text-xs text-green-600 font-bold uppercase tracking-wider">
                       {testimonial.role}
                     </div>
                   </div>
@@ -473,48 +500,47 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Top Results */}
-      <section className="py-14 sm:py-20 px-4 bg-white dark:bg-gray-900">
+      <section className="py-20 sm:py-28 px-4 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <div className="text-red-600 font-bold tracking-widest text-xs sm:text-sm">
+          <div className="text-center mb-16 sm:mb-20">
+            <div className="text-red-600 font-black tracking-[0.25em] uppercase text-[10px] sm:text-xs mb-4">
               {content.resultsTag}
             </div>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black mt-2 sm:mt-3">
+            <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black mt-2 leading-[1.1] tracking-tight">
               {content.resultsTitle}
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {topResults.map((item, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.2 }}
-                className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-6 sm:p-7 shadow-[0_18px_45px_rgba(15,23,42,0.12)] transition-all duration-200 hover:border-red-200 hover:shadow-[0_26px_70px_rgba(185,28,28,0.18)] dark:border-gray-800 dark:bg-gray-900 dark:shadow-black/40 dark:hover:border-red-900/60"
+                whileHover={{ y: -8 }}
+                className="relative overflow-hidden rounded-[2rem] border border-gray-100 bg-white p-7 sm:p-8 shadow-sm hover:shadow-2xl transition-all duration-300 hover:border-red-100 dark:border-gray-800 dark:bg-gray-900"
               >
-                <div className="absolute right-0 top-0 h-20 w-20 sm:h-24 sm:w-24 rounded-bl-[3rem] bg-red-50 dark:bg-red-950/25" />
+                <div className="absolute right-0 top-0 h-20 w-20 rounded-bl-[3rem] bg-red-50 dark:bg-red-950/20" />
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
-                    <div className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
                       IELTS Score
                     </div>
-                    <div className="mt-1 sm:mt-2 text-5xl sm:text-6xl font-black leading-none text-red-600 dark:text-red-400">
+                    <div className="mt-2 text-5xl sm:text-6xl font-black leading-none text-red-600 dark:text-red-400">
                       {item.score}
                     </div>
                   </div>
-                  <div className="relative flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-red-600 text-xl sm:text-2xl font-black text-white shadow-lg shadow-red-600/25">
+                  <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-600 text-xl font-black text-white shadow-lg">
                     {item.initials}
                   </div>
                 </div>
-                <div className="relative mt-6 sm:mt-8">
-                  <div className="text-lg sm:text-xl font-black text-gray-950 dark:text-white">
+                <div className="relative mt-8">
+                  <div className="text-xl font-black text-gray-950 dark:text-white mb-1">
                     {item.name}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-500">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">
                     {item.module} • {item.year}
                   </div>
                 </div>
-                <div className="mt-4 sm:mt-6 flex items-center gap-2 text-xs sm:text-sm text-green-600 font-medium">
+                <div className="mt-6 flex items-center gap-2 text-sm text-green-600 font-bold">
                   <CheckCircle size={18} /> {content.successful}
                 </div>
               </motion.div>
@@ -524,23 +550,25 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Final CTA */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 dark:from-red-700 dark:to-red-900 py-16 sm:py-24 text-white text-center">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 leading-tight">
+      <div className="bg-gradient-to-br from-red-600 to-red-800 py-24 sm:py-32 text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 leading-[1.1] tracking-tight">
             Bugun boshlang — Ertaga orzuingizdagi ballga erishing!
           </h2>
-          <p className="text-sm sm:text-lg mb-8 sm:mb-10 opacity-90 max-w-md mx-auto">
+          <p className="text-base sm:text-xl mb-10 opacity-90 max-w-2xl mx-auto leading-relaxed font-medium">
             Birinchi dars mutlaqo bepul. Natijani o'zingiz ko'rasiz.
           </p>
-          <div className="px-4 sm:px-0">
-            <a
-              href={telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl bg-white dark:bg-gray-100 text-red-600 hover:bg-gray-50 dark:hover:bg-gray-200 hover:text-red-700 transition-colors font-bold text-base sm:text-lg shadow-xl"
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              size="lg"
+              icon={Zap}
+              onClick={() => window.open(telegramUrl, "_blank")}
+              className="bg-white !text-red-600 hover:!bg-red-50 border-none shadow-2xl px-12 hover:shadow-white/20 transition-all duration-300"
             >
-              Bepul darsga yozilish <Zap className="w-5 h-5 sm:w-7 sm:h-7 fill-current" />
-            </a>
+              Bepul darsga yozilish
+            </Button>
           </div>
         </div>
       </div>
