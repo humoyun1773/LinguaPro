@@ -50,19 +50,20 @@ export const Header: React.FC = () => {
         ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] h-[80px] w-full bg-white/90 dark:bg-gray-950/95 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-[100] h-[60px] w-full bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 h-[60px] flex items-center justify-between">
+
         {/* --- Logo Section --- */}
         <Link to="/" className="flex items-center shrink-0">
-          <div className="w-11 h-11 rounded-full overflow-hidden bg-red-600/20 dark:bg-red-900/40 border-2 border-red-600/20 dark:border-red-500/30 flex items-center justify-center shadow-sm">
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-red-600/20 dark:bg-red-900/40 border-2 border-red-600/20 dark:border-red-500/30 flex items-center justify-center shadow-sm">
             <img
               src={logo}
               alt="Logo"
-              className="w-8 h-8 object-contain"
+              className="w-7 h-7 object-contain"
             />
           </div>
-          <div className="ml-3">
-            <span className="text-xl font-black tracking-tighter text-gray-900 dark:text-white leading-none">
+          <div className="ml-2.5">
+            <span className="text-lg font-black tracking-tighter text-gray-900 dark:text-white leading-none">
               Lingua<span className="text-red-700">Pro</span>
             </span>
           </div>
