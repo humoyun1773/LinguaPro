@@ -194,6 +194,7 @@ export const HomePage: React.FC = () => {
                   {content.heroTag}
                 </div>
 
+                {/* ✅ SHU YER O'ZGARTIRILDI: leading-[1.3] → leading-[1.1] */}
                 <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black leading-[1.1] tracking-tighter max-w-xl lg:max-w-none mx-auto lg:mx-0 text-gray-900 dark:text-white">
                   {language === "uz" ? (
                     <>IELTSdan <span className="text-red-600">{content.heroTitleSpan}</span> olish endi oson!</>
@@ -296,12 +297,11 @@ export const HomePage: React.FC = () => {
                 <p className="mt-6 text-xl sm:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">{content.teamDesc}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                {teachers.map((teacher) => (
+                {teachers.map((teacher, i) => (
                   <motion.div key={teacher.id} whileHover={{ y: -10 }} className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-[0_15px_40px_rgba(15,23,42,0.08)] hover:shadow-[0_25px_60px_rgba(185,28,28,0.15)] transition-all duration-300 flex flex-col">
                     <div className="relative p-6 pb-0">
                       <div className="flex items-start gap-4">
-                        {/* ✅ rounded-2xl → rounded-full */}
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-lg">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-600 to-red-800 rounded-2xl flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-lg">
                           {teacher.name.split(" ").map((n) => n[0]).join("")}
                         </div>
                         <div className="min-w-0 pt-1">
