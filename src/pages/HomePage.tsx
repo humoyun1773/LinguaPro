@@ -64,7 +64,7 @@ export const HomePage: React.FC = () => {
   const content =
     language === "uz"
       ? {
-          heroTag: "O'zbekistonda IELTS bo'yicha №1",
+          heroTag: "Orzuingizdagi natija sari",
           heroTitle: (
             <>
               IELTSdan <span className="text-red-600">yuqori ball</span> olish
@@ -72,7 +72,7 @@ export const HomePage: React.FC = () => {
             </>
           ),
           heroDesc:
-            "Tajribali ustozlar, innovatsion usullar va shaxsiy yondashuv bilan 6.5–8.5 ball oralig'ida natijaga erishing.",
+            "Tajribali ustozlar, innovatsion usullar va shaxsiy yondashuv bilan IELTS 9.0 ballga biz bilan erishing.",
           startBtn: "Hozir boshlash",
           freeLessonBtn: "Bepul sinov darsi",
           students: "Talabalar",
@@ -98,14 +98,14 @@ export const HomePage: React.FC = () => {
           studentsLabel: "O'quvchilar",
         }
       : {
-          heroTag: "№1 IELTS Center in Uzbekistan",
+          heroTag: "Your journey to success",
           heroTitle: (
             <>
               Get <span className="text-red-600">High IELTS Score</span> Easily!
             </>
           ),
           heroDesc:
-            "Experienced teachers, innovative methods, and personal approach to achieve 6.5–8.5 IELTS.",
+            "Experienced teachers, innovative methods, and personal approach to achieve your IELTS 9.0 with us.",
           startBtn: "Start Now",
           freeLessonBtn: "Free Trial Lesson",
           students: "Students",
@@ -552,8 +552,11 @@ export const HomePage: React.FC = () => {
       {/* Final CTA */}
       <div className="bg-gradient-to-br from-red-600 to-red-800 py-24 sm:py-32 text-white text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 leading-[1.1] tracking-tight">
+        <div className="max-w-3xl mx-auto px-6 relative z-10">
+          <div className="text-white/80 font-black tracking-[0.25em] uppercase text-[10px] sm:text-xs mb-4">
+            {language === 'uz' ? 'Imkoniyatni boy bermang' : 'Take the first step'}
+          </div>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 leading-[1.3] tracking-tight">
             Bugun boshlang — Ertaga orzuingizdagi ballga erishing!
           </h2>
           <p className="text-base sm:text-xl mb-10 opacity-90 max-w-2xl mx-auto leading-relaxed font-medium">

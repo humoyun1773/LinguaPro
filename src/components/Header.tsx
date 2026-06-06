@@ -54,11 +54,11 @@ export const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
         {/* --- Logo Section --- */}
         <Link to="/" className="flex items-center shrink-0">
-          <div className="w-12 h-12 rounded-xl overflow-hidden bg-red-600 shadow-lg shadow-red-600/20">
+          <div className="w-11 h-11 rounded-full overflow-hidden bg-red-600/20 dark:bg-red-900/40 border-2 border-red-600/20 dark:border-red-500/30 flex items-center justify-center shadow-sm">
             <img
               src={logo}
               alt="Logo"
-              className="w-full h-full object-cover"
+              className="w-8 h-8 object-contain"
             />
           </div>
           <div className="ml-3">
@@ -67,6 +67,7 @@ export const Header: React.FC = () => {
             </span>
           </div>
         </Link>
+
 
         {/* --- Center Nav --- */}
         <nav className="hidden md:flex items-center space-x-1 bg-gray-100/50 dark:bg-white/5 p-1 rounded-2xl border border-gray-200/10 dark:border-white/5">
