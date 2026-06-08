@@ -29,7 +29,10 @@ export const Footer: React.FC = () => {
             <span className="text-sm sm:text-2xl font-bold text-red-500 block">
               LinguaPro
             </span>
-            <p className="hidden sm:block mt-4 text-gray-400 text-base">
+            <p className="mt-1 sm:mt-2 text-gray-400 text-[10px] sm:text-sm leading-tight">
+              Bizning ijtimoiy<br className="sm:hidden" /> tarmoqlar
+            </p>
+            <p className="hidden sm:block mt-2 text-gray-400 text-base">
               123 Education Street
               <br />
               Learning City, LC 12345
