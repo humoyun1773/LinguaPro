@@ -4,9 +4,11 @@ import { useLanguage } from "../hooks/useLanguage"
 import { Reveal } from "../components/animation/Reveal"
 import { StaggerText } from "../components/animation/StaggerText"
 import { LoadingState } from "../components/LoadingState"
+import { useNavigate } from "react-router-dom"
 import { login } from "../services/api"
 
 export const SignInPage: React.FC = () => {
+  const navigate = useNavigate()
   const { language } = useLanguage()
   const [showPassword, setShowPassword] = useState(false)
   const [username, setUsername] = useState("")
@@ -57,7 +59,7 @@ export const SignInPage: React.FC = () => {
       setSuccess(content.loginSuccess)
       // Redirect to home page after successful login
       setTimeout(() => {
-        window.location.href = "/"
+        navigate("/", { replace: true })
       }, 1500)
     } else {
       setError(result.error || content.invalidCredentials)

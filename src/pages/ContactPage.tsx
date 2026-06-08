@@ -38,22 +38,16 @@ export const ContactPage: React.FC = () => {
     workingHours: "Dushanba - Shanba: 09:00 - 19:00",
     workingHoursEn: "Monday - Saturday: 09:00 - 19:00",
     telegram: "@TalipovShoh",
-    location: { lat: 38.8606, lng: 65.7894 }, // Qarshi coordinates
+    location: { lat: 38.8606, lng: 65.7894 }, 
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
-    // For real implementation, you would send to your backend:
-    // const response = await fetch('/api/contact', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData)
-    // })
+
 
     setSubmitStatus("success")
     setIsSubmitting(false)
