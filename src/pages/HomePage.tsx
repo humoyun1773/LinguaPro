@@ -402,7 +402,7 @@ export const HomePage: React.FC = () => {
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
             <div className="max-w-3xl mx-auto px-6 relative z-10">
               <div className="text-white/80 font-black tracking-[0.25em] uppercase text-[10px] sm:text-xs mb-4">{content.ctaTag}</div>
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 leading-[1.3] tracking-tight">{content.ctaTitle}</h2>
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 leading-[1.8] sm:leading-[1.6] tracking-tight">{content.ctaTitle}</h2>
               <p className="text-base sm:text-xl mb-10 opacity-90 max-w-2xl mx-auto leading-relaxed font-medium">{content.ctaDesc}</p>
               <div className="flex justify-center">
                 <Button variant="outline" size="lg" icon={Zap} onClick={() => window.open(telegramUrl, "_blank")} className="bg-white !text-red-600 hover:!bg-red-50 border-none shadow-2xl px-12 hover:shadow-white/20 transition-all duration-300">
