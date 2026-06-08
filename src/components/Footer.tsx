@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-4">
+            <h3 className="text-xs sm:text-lg font-semibold mb-2 sm:mb-4">
               Quick Links
             </h3>
             <ul className="space-y-1 sm:space-y-2">
