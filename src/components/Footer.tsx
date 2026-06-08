@@ -23,48 +23,48 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white mt-12 sm:mt-16 md:mt-20">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-3 sm:gap-8 items-start">
           {/* Logo and Info */}
-          <div>
-            <span className="text-xl sm:text-2xl font-bold text-red-500">
+          <div className="col-span-1">
+            <span className="text-sm sm:text-2xl font-bold text-red-500 block">
               LinguaPro
             </span>
-            <p className="mt-3 sm:mt-4 text-gray-400 text-sm sm:text-base">
+            <p className="hidden sm:block mt-4 text-gray-400 text-base">
               123 Education Street
               <br />
               Learning City, LC 12345
             </p>
-            <div className="mt-3 sm:mt-4 flex space-x-3 sm:space-x-4">
+            <div className="mt-2 sm:mt-4 flex space-x-1.5 sm:space-x-4">
               <a
                 href="https://www.instagram.com/linguapro.karshi/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-600 to-pink-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                className="w-7 h-7 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-600 to-pink-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
               >
-                <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                <Instagram className="w-3.5 h-3.5 sm:w-6 sm:h-6 text-white" />
               </a>
               <a
                 href="https://t.me/TalipovShoh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                className="w-7 h-7 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
               >
-                <Send className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                <Send className="w-3.5 h-3.5 sm:w-6 sm:h-6 text-white" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+            <h3 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-4">
               Quick Links
             </h3>
-            <ul className="space-y-1.5 sm:space-y-2">
+            <ul className="space-y-1 sm:space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
+                    className="text-gray-400 hover:text-white transition-colors text-xs sm:text-base"
                   >
                     {link.name}
                   </Link>
@@ -75,26 +75,26 @@ export const Footer: React.FC = () => {
 
           {/* Legal */}
           <div>
-            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+            <h3 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-4">
               Legal
             </h3>
-            <ul className="space-y-1.5 sm:space-y-2">
+            <ul className="space-y-1 sm:space-y-2">
               {legalLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
+                    className="text-gray-400 hover:text-white transition-colors text-xs sm:text-base"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <img
                 src={logo}
                 alt="LinguaPro Logo"
-                className="w-16 h-16 rounded-xl object-cover"
+                className="w-10 h-10 sm:w-16 sm:h-16 rounded-xl object-cover"
               />
             </div>
           </div>
