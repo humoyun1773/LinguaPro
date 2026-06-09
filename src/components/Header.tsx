@@ -92,7 +92,7 @@ export const Header: React.FC = () => {
         </Link>
 
         {/* --- Center Nav — md+ (planshet va desktop) --- */}
-        <nav className="hidden md:flex items-center bg-gray-100/50 dark:bg-white/5 p-1 rounded-2xl border border-gray-200/10 dark:border-white/5 flex-1 justify-between mx-2">
+        <nav className="hidden md:flex items-center bg-gray-100/50 dark:bg-white/5 p-1 rounded-2xl border border-gray-200/10 dark:border-white/5 md:flex-1 md:justify-between lg:flex-none lg:justify-center lg:gap-2 mx-2">
           {navItems.map((item) =>
             item.children ? (
               <div key={item.name} className="relative">
@@ -101,7 +101,7 @@ export const Header: React.FC = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setIsSpecialistOpen(!isSpecialistOpen)}
-                  className={`flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl transition-colors ${
+                  className={`flex items-center gap-1 px-3 py-1.5 lg:px-6 lg:py-2 text-xs lg:text-sm font-bold rounded-xl transition-colors ${
                     item.children.some((child) => location.pathname === child.path)
                       ? "bg-red-600 text-white shadow-md shadow-red-600/20"
                       : "text-gray-600 dark:text-gray-400 hover:text-red-600"
@@ -155,7 +155,7 @@ export const Header: React.FC = () => {
                 to={item.path || '/'}
                 end
                 className={({ isActive }) =>
-                  `px-3 py-1.5 text-xs font-bold rounded-xl transition-colors block ${
+                  `px-3 py-1.5 lg:px-6 lg:py-2 text-xs lg:text-sm font-bold rounded-xl transition-colors block ${
                     isActive
                       ? "bg-red-600 text-white shadow-md shadow-red-600/20"
                       : "text-gray-600 dark:text-gray-400 hover:text-red-600"
