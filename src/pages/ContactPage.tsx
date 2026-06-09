@@ -59,7 +59,6 @@ export const ContactPage: React.FC = () => {
       message: "",
     })
 
-    // Reset status after 5 seconds
     setTimeout(() => setSubmitStatus("idle"), 5000)
   }
 

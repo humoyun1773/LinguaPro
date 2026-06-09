@@ -10,7 +10,6 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === 'uz' ? 'en' : 'uz'))
   }
-
   return (
     <LanguageContext.Provider value={{ language, toggleLanguage }}>
       {children}
